@@ -2,20 +2,21 @@
 
 #include "../include/doctest.h"
 #include "../include/statistic.hpp"
-#include "../include/coding.hpp"
+#include "../include/huffman_coding.hpp"
+#include "../include/bit_manipulating.hpp"
 #include "../include/huffman_tree.hpp"
 #include "../include/constants.hpp"
 #include <sstream>
 
 TEST_CASE("bit_reader tests") {
 	std::stringstream stream;
-	coding::bit_reader reader(stream);
+	bit_manipulating::bit_reader reader(stream);
 
 	SUBCASE("one byte 255") {
 		stream.put((char)255);
 		for (int i = 0; i < 8; ++i) {
 			CHECK(reader.read_bit());
-			CHECK(coding::bit_reader::read_byte_count == 1);
+			CHECK(bit_manipulating::bit_reader::read_byte_count == 1);
 		}
 	}
 
@@ -23,7 +24,7 @@ TEST_CASE("bit_reader tests") {
 		stream.put((char)0);
 		for (int i = 0; i < 8; ++i) {
 			CHECK(!reader.read_bit());
-			CHECK(coding::bit_reader::read_byte_count == 2);
+			CHECK(bit_manipulating::bit_reader::read_byte_count == 2);
 		}
 	}
 
@@ -32,26 +33,26 @@ TEST_CASE("bit_reader tests") {
 		stream.put((char)0);
 		for (int i = 0; i < 8; ++i) {
 			CHECK(reader.read_bit());
-			CHECK(coding::bit_reader::read_byte_count == 3);
+			CHECK(bit_manipulating::bit_reader::read_byte_count == 3);
 		}
 		for (int i = 0; i < 8; ++i) {
 			CHECK(!reader.read_bit());
-			CHECK(coding::bit_reader::read_byte_count == 4);
+			CHECK(bit_manipulating::bit_reader::read_byte_count == 4);
 		}
 	}
 }
 
 TEST_CASE("bit_writer test") {
 	std::stringstream stream;
-	coding::bit_writer writer(stream);
+	bit_manipulating::bit_writer writer(stream);
 
 	SUBCASE("one byte 255") {
 		for (int i = 0; i < 8; ++i) {
 			writer.write_bit(1);
 			if (i < 7)
-				CHECK(coding::bit_writer::written_byte_count == 0);
+				CHECK(bit_manipulating::bit_writer::written_byte_count == 0);
 			else
-				CHECK(coding::bit_writer::written_byte_count == 1);
+				CHECK(bit_manipulating::bit_writer::written_byte_count == 1);
 		}
 		CHECK(stream.get() == 255);
 	}
@@ -60,9 +61,9 @@ TEST_CASE("bit_writer test") {
 		for (int i = 0; i < 8; ++i) {
 			writer.write_bit(0);
 			if (i < 7)
-				CHECK(coding::bit_writer::written_byte_count == 1);
+				CHECK(bit_manipulating::bit_writer::written_byte_count == 1);
 			else
-				CHECK(coding::bit_writer::written_byte_count == 2);
+				CHECK(bit_manipulating::bit_writer::written_byte_count == 2);
 		}
 		CHECK(stream.get() == 0);
 	}
@@ -100,7 +101,7 @@ TEST_CASE("encoder test") {
 	codes['o'] = "0111";
 	std::stringstream output_stream;
 	std::stringstream input_stream;
-	coding::encoder enc(codes, 5, output_stream);
+	huffman_coding::encoder enc(codes, 5, output_stream);
 
 	input_stream << "hello";
 	enc.encode(input_stream);
@@ -137,7 +138,7 @@ TEST_CASE("decoder and huffman tree test") {
 
 	std::stringstream output_stream;
 	std::stringstream input_stream;
-	coding::decoder dec(std::move(tree), 5, input_stream);
+	huffman_coding::decoder dec(std::move(tree), 5, input_stream);
 	input_stream.put(0b10001111);
 	input_stream.put(0b00000001);
 	dec.decode(output_stream);

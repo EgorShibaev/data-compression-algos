@@ -1,0 +1,1 @@
+/usr/bin/c++   -O2 -Wall -Werror -std=c++17  -rdynamic CMakeFiles/data-compression-algos.dir/src/bit_manipulating.cpp.o CMakeFiles/data-compression-algos.dir/src/huffman_coding.cpp.o CMakeFiles/data-compression-algos.dir/src/huffman_tree.cpp.o CMakeFiles/data-compression-algos.dir/src/statistic.cpp.o CMakeFiles/data-compression-algos.dir/src/main.cpp.o  -o data-compression-algos 

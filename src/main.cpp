@@ -1,5 +1,5 @@
 #include "../include/huffman_tree.hpp"
-#include "../include/coding.hpp"
+#include "../include/huffman_coding.hpp"
 #include "../include/constants.hpp"
 #include <vector>
 #include <tuple>
@@ -12,7 +12,7 @@ std::tuple<char, std::string, std::string> parse_args(int argc, char *argv[]) {
 		throw std::invalid_argument("required 6 arguments");
 	std::vector<std::string> args;
 	for (int i = 1; i < 6; ++i)
-		args.push_back(std::string(argv[i]));
+		args.emplace_back(argv[i]);
 	std::string file;
 	std::string output;
 	char mode;
@@ -53,7 +53,7 @@ int main(int argc, char *argv[]) {
 			statistic::statistic stat(file);
 			stat.unload(out);
 			huffman_tree::huffman_tree tree(stat);
-			coding::encoder enc(tree.codes(), stat.sum(), out);
+			huffman_coding::encoder enc(tree.codes(), stat.sum(), out);
 			std::ifstream in(file);
 			in.exceptions(std::ifstream::badbit | std::ifstream::failbit);
 			enc.encode(in);
@@ -65,12 +65,12 @@ int main(int argc, char *argv[]) {
 			statistic::statistic stat;
 			stat.load(in);
 			huffman_tree::huffman_tree tree(stat);
-			coding::decoder dec(std::move(tree), stat.sum(), in);
+			huffman_coding::decoder dec(std::move(tree), stat.sum(), in);
 			std::ofstream out(output);
 			out.exceptions(std::ostream::badbit | std::ostream::failbit);
 			dec.decode(out);
 
-			input_file_size = coding::bit_reader::read_byte_count;
+			input_file_size = bit_manipulating::bit_reader::read_byte_count;
 			output_file_size = stat.sum();
 		}
 	}
@@ -79,7 +79,7 @@ int main(int argc, char *argv[]) {
 		return 1;
 	}
 	if (output_file_size == -1)
-		output_file_size = coding::bit_writer::written_byte_count;
+		output_file_size = bit_manipulating::bit_writer::written_byte_count;
 
 	std::cout << input_file_size << "\n";
 	std::cout << output_file_size << "\n";
