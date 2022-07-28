@@ -1,0 +1,1 @@
+-c -f tests/sample1.txt -o OUTPUT_FILE -huff

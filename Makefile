@@ -124,17 +124,17 @@ test/fast:
 .PHONY : test/fast
 
 #=============================================================================
-# Target rules for targets named data-compression-algos
+# Target rules for targets named dca
 
 # Build rule for target.
-data-compression-algos: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 data-compression-algos
-.PHONY : data-compression-algos
+dca: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 dca
+.PHONY : dca
 
 # fast build rule for target.
-data-compression-algos/fast:
-	$(MAKE) -f CMakeFiles/data-compression-algos.dir/build.make CMakeFiles/data-compression-algos.dir/build
-.PHONY : data-compression-algos/fast
+dca/fast:
+	$(MAKE) -f CMakeFiles/dca.dir/build.make CMakeFiles/dca.dir/build
+.PHONY : dca/fast
 
 src/bit_manipulating.o: src/bit_manipulating.cpp.o
 
@@ -143,7 +143,7 @@ src/bit_manipulating.o: src/bit_manipulating.cpp.o
 # target to build an object file
 src/bit_manipulating.cpp.o:
 	$(MAKE) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/src/bit_manipulating.cpp.o
-	$(MAKE) -f CMakeFiles/data-compression-algos.dir/build.make CMakeFiles/data-compression-algos.dir/src/bit_manipulating.cpp.o
+	$(MAKE) -f CMakeFiles/dca.dir/build.make CMakeFiles/dca.dir/src/bit_manipulating.cpp.o
 .PHONY : src/bit_manipulating.cpp.o
 
 src/bit_manipulating.i: src/bit_manipulating.cpp.i
@@ -153,7 +153,7 @@ src/bit_manipulating.i: src/bit_manipulating.cpp.i
 # target to preprocess a source file
 src/bit_manipulating.cpp.i:
 	$(MAKE) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/src/bit_manipulating.cpp.i
-	$(MAKE) -f CMakeFiles/data-compression-algos.dir/build.make CMakeFiles/data-compression-algos.dir/src/bit_manipulating.cpp.i
+	$(MAKE) -f CMakeFiles/dca.dir/build.make CMakeFiles/dca.dir/src/bit_manipulating.cpp.i
 .PHONY : src/bit_manipulating.cpp.i
 
 src/bit_manipulating.s: src/bit_manipulating.cpp.s
@@ -163,7 +163,7 @@ src/bit_manipulating.s: src/bit_manipulating.cpp.s
 # target to generate assembly for a file
 src/bit_manipulating.cpp.s:
 	$(MAKE) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/src/bit_manipulating.cpp.s
-	$(MAKE) -f CMakeFiles/data-compression-algos.dir/build.make CMakeFiles/data-compression-algos.dir/src/bit_manipulating.cpp.s
+	$(MAKE) -f CMakeFiles/dca.dir/build.make CMakeFiles/dca.dir/src/bit_manipulating.cpp.s
 .PHONY : src/bit_manipulating.cpp.s
 
 src/huffman_coding.o: src/huffman_coding.cpp.o
@@ -173,7 +173,7 @@ src/huffman_coding.o: src/huffman_coding.cpp.o
 # target to build an object file
 src/huffman_coding.cpp.o:
 	$(MAKE) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/src/huffman_coding.cpp.o
-	$(MAKE) -f CMakeFiles/data-compression-algos.dir/build.make CMakeFiles/data-compression-algos.dir/src/huffman_coding.cpp.o
+	$(MAKE) -f CMakeFiles/dca.dir/build.make CMakeFiles/dca.dir/src/huffman_coding.cpp.o
 .PHONY : src/huffman_coding.cpp.o
 
 src/huffman_coding.i: src/huffman_coding.cpp.i
@@ -183,7 +183,7 @@ src/huffman_coding.i: src/huffman_coding.cpp.i
 # target to preprocess a source file
 src/huffman_coding.cpp.i:
 	$(MAKE) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/src/huffman_coding.cpp.i
-	$(MAKE) -f CMakeFiles/data-compression-algos.dir/build.make CMakeFiles/data-compression-algos.dir/src/huffman_coding.cpp.i
+	$(MAKE) -f CMakeFiles/dca.dir/build.make CMakeFiles/dca.dir/src/huffman_coding.cpp.i
 .PHONY : src/huffman_coding.cpp.i
 
 src/huffman_coding.s: src/huffman_coding.cpp.s
@@ -193,7 +193,7 @@ src/huffman_coding.s: src/huffman_coding.cpp.s
 # target to generate assembly for a file
 src/huffman_coding.cpp.s:
 	$(MAKE) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/src/huffman_coding.cpp.s
-	$(MAKE) -f CMakeFiles/data-compression-algos.dir/build.make CMakeFiles/data-compression-algos.dir/src/huffman_coding.cpp.s
+	$(MAKE) -f CMakeFiles/dca.dir/build.make CMakeFiles/dca.dir/src/huffman_coding.cpp.s
 .PHONY : src/huffman_coding.cpp.s
 
 src/huffman_tree.o: src/huffman_tree.cpp.o
@@ -203,7 +203,7 @@ src/huffman_tree.o: src/huffman_tree.cpp.o
 # target to build an object file
 src/huffman_tree.cpp.o:
 	$(MAKE) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/src/huffman_tree.cpp.o
-	$(MAKE) -f CMakeFiles/data-compression-algos.dir/build.make CMakeFiles/data-compression-algos.dir/src/huffman_tree.cpp.o
+	$(MAKE) -f CMakeFiles/dca.dir/build.make CMakeFiles/dca.dir/src/huffman_tree.cpp.o
 .PHONY : src/huffman_tree.cpp.o
 
 src/huffman_tree.i: src/huffman_tree.cpp.i
@@ -213,7 +213,7 @@ src/huffman_tree.i: src/huffman_tree.cpp.i
 # target to preprocess a source file
 src/huffman_tree.cpp.i:
 	$(MAKE) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/src/huffman_tree.cpp.i
-	$(MAKE) -f CMakeFiles/data-compression-algos.dir/build.make CMakeFiles/data-compression-algos.dir/src/huffman_tree.cpp.i
+	$(MAKE) -f CMakeFiles/dca.dir/build.make CMakeFiles/dca.dir/src/huffman_tree.cpp.i
 .PHONY : src/huffman_tree.cpp.i
 
 src/huffman_tree.s: src/huffman_tree.cpp.s
@@ -223,7 +223,7 @@ src/huffman_tree.s: src/huffman_tree.cpp.s
 # target to generate assembly for a file
 src/huffman_tree.cpp.s:
 	$(MAKE) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/src/huffman_tree.cpp.s
-	$(MAKE) -f CMakeFiles/data-compression-algos.dir/build.make CMakeFiles/data-compression-algos.dir/src/huffman_tree.cpp.s
+	$(MAKE) -f CMakeFiles/dca.dir/build.make CMakeFiles/dca.dir/src/huffman_tree.cpp.s
 .PHONY : src/huffman_tree.cpp.s
 
 src/main.o: src/main.cpp.o
@@ -232,7 +232,7 @@ src/main.o: src/main.cpp.o
 
 # target to build an object file
 src/main.cpp.o:
-	$(MAKE) -f CMakeFiles/data-compression-algos.dir/build.make CMakeFiles/data-compression-algos.dir/src/main.cpp.o
+	$(MAKE) -f CMakeFiles/dca.dir/build.make CMakeFiles/dca.dir/src/main.cpp.o
 .PHONY : src/main.cpp.o
 
 src/main.i: src/main.cpp.i
@@ -241,7 +241,7 @@ src/main.i: src/main.cpp.i
 
 # target to preprocess a source file
 src/main.cpp.i:
-	$(MAKE) -f CMakeFiles/data-compression-algos.dir/build.make CMakeFiles/data-compression-algos.dir/src/main.cpp.i
+	$(MAKE) -f CMakeFiles/dca.dir/build.make CMakeFiles/dca.dir/src/main.cpp.i
 .PHONY : src/main.cpp.i
 
 src/main.s: src/main.cpp.s
@@ -250,7 +250,7 @@ src/main.s: src/main.cpp.s
 
 # target to generate assembly for a file
 src/main.cpp.s:
-	$(MAKE) -f CMakeFiles/data-compression-algos.dir/build.make CMakeFiles/data-compression-algos.dir/src/main.cpp.s
+	$(MAKE) -f CMakeFiles/dca.dir/build.make CMakeFiles/dca.dir/src/main.cpp.s
 .PHONY : src/main.cpp.s
 
 src/statistic.o: src/statistic.cpp.o
@@ -260,7 +260,7 @@ src/statistic.o: src/statistic.cpp.o
 # target to build an object file
 src/statistic.cpp.o:
 	$(MAKE) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/src/statistic.cpp.o
-	$(MAKE) -f CMakeFiles/data-compression-algos.dir/build.make CMakeFiles/data-compression-algos.dir/src/statistic.cpp.o
+	$(MAKE) -f CMakeFiles/dca.dir/build.make CMakeFiles/dca.dir/src/statistic.cpp.o
 .PHONY : src/statistic.cpp.o
 
 src/statistic.i: src/statistic.cpp.i
@@ -270,7 +270,7 @@ src/statistic.i: src/statistic.cpp.i
 # target to preprocess a source file
 src/statistic.cpp.i:
 	$(MAKE) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/src/statistic.cpp.i
-	$(MAKE) -f CMakeFiles/data-compression-algos.dir/build.make CMakeFiles/data-compression-algos.dir/src/statistic.cpp.i
+	$(MAKE) -f CMakeFiles/dca.dir/build.make CMakeFiles/dca.dir/src/statistic.cpp.i
 .PHONY : src/statistic.cpp.i
 
 src/statistic.s: src/statistic.cpp.s
@@ -280,7 +280,7 @@ src/statistic.s: src/statistic.cpp.s
 # target to generate assembly for a file
 src/statistic.cpp.s:
 	$(MAKE) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/src/statistic.cpp.s
-	$(MAKE) -f CMakeFiles/data-compression-algos.dir/build.make CMakeFiles/data-compression-algos.dir/src/statistic.cpp.s
+	$(MAKE) -f CMakeFiles/dca.dir/build.make CMakeFiles/dca.dir/src/statistic.cpp.s
 .PHONY : src/statistic.cpp.s
 
 src/test.o: src/test.cpp.o
@@ -319,7 +319,7 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... test"
-	@echo "... data-compression-algos"
+	@echo "... dca"
 	@echo "... src/bit_manipulating.o"
 	@echo "... src/bit_manipulating.i"
 	@echo "... src/bit_manipulating.s"

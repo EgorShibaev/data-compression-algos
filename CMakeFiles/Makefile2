@@ -54,13 +54,13 @@ CMAKE_BINARY_DIR = /home/egor/my-projects/data-compression-algos
 
 # The main recursive "all" target.
 all: CMakeFiles/test.dir/all
-all: CMakeFiles/data-compression-algos.dir/all
+all: CMakeFiles/dca.dir/all
 
 .PHONY : all
 
 # The main recursive "clean" target.
 clean: CMakeFiles/test.dir/clean
-clean: CMakeFiles/data-compression-algos.dir/clean
+clean: CMakeFiles/dca.dir/clean
 
 .PHONY : clean
 
@@ -97,31 +97,31 @@ CMakeFiles/test.dir/clean:
 .PHONY : CMakeFiles/test.dir/clean
 
 #=============================================================================
-# Target rules for target CMakeFiles/data-compression-algos.dir
+# Target rules for target CMakeFiles/dca.dir
 
 # All Build rule for target.
-CMakeFiles/data-compression-algos.dir/all:
-	$(MAKE) -f CMakeFiles/data-compression-algos.dir/build.make CMakeFiles/data-compression-algos.dir/depend
-	$(MAKE) -f CMakeFiles/data-compression-algos.dir/build.make CMakeFiles/data-compression-algos.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/egor/my-projects/data-compression-algos/CMakeFiles --progress-num=1,2,3,4,5,6 "Built target data-compression-algos"
-.PHONY : CMakeFiles/data-compression-algos.dir/all
+CMakeFiles/dca.dir/all:
+	$(MAKE) -f CMakeFiles/dca.dir/build.make CMakeFiles/dca.dir/depend
+	$(MAKE) -f CMakeFiles/dca.dir/build.make CMakeFiles/dca.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/egor/my-projects/data-compression-algos/CMakeFiles --progress-num=1,2,3,4,5,6 "Built target dca"
+.PHONY : CMakeFiles/dca.dir/all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/data-compression-algos.dir/rule: cmake_check_build_system
+CMakeFiles/dca.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/egor/my-projects/data-compression-algos/CMakeFiles 6
-	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/data-compression-algos.dir/all
+	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/dca.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/egor/my-projects/data-compression-algos/CMakeFiles 0
-.PHONY : CMakeFiles/data-compression-algos.dir/rule
+.PHONY : CMakeFiles/dca.dir/rule
 
 # Convenience name for target.
-data-compression-algos: CMakeFiles/data-compression-algos.dir/rule
+dca: CMakeFiles/dca.dir/rule
 
-.PHONY : data-compression-algos
+.PHONY : dca
 
 # clean rule for target.
-CMakeFiles/data-compression-algos.dir/clean:
-	$(MAKE) -f CMakeFiles/data-compression-algos.dir/build.make CMakeFiles/data-compression-algos.dir/clean
-.PHONY : CMakeFiles/data-compression-algos.dir/clean
+CMakeFiles/dca.dir/clean:
+	$(MAKE) -f CMakeFiles/dca.dir/build.make CMakeFiles/dca.dir/clean
+.PHONY : CMakeFiles/dca.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

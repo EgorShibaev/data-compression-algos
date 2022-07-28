@@ -1,1 +1,0 @@
--c -f TESTS_DIR/sample.txt -o OUTPUT_FILE

@@ -15,7 +15,7 @@ namespace statistic {
 	public:
 		statistic();
 
-		explicit statistic(std::string &name);
+		explicit statistic(const std::string &name);
 
 		void load(std::istream &in);
 

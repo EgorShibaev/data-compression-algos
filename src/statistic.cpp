@@ -25,7 +25,7 @@ namespace statistic {
 
 	statistic::statistic() = default;
 
-	statistic::statistic(std::string &name) {
+	statistic::statistic(const std::string &name) {
 		std::ifstream in(name);
 		in.exceptions(std::ifstream::badbit);
 		char ch;
