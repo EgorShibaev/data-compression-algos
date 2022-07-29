@@ -1,11 +1,12 @@
-#include "../include/huffman_tree.hpp"
-#include "../include/huffman_coding.hpp"
+#include "huffman/huffman_tree.hpp"
+#include "huffman/huffman_coding.hpp"
 #include "../include/constants.hpp"
 #include <vector>
 #include <tuple>
 #include <fstream>
 #include <iostream>
 #include <stdexcept>
+#include <filesystem>
 
 using std::string;
 
@@ -53,14 +54,6 @@ void huffman_algo(const std::string& file, const std::string& output, char mode)
 		std::ifstream in(file);
 		in.exceptions(std::ifstream::badbit | std::ifstream::failbit);
 		enc.encode(in);
-
-		auto input_file_size = stat.sum();
-		auto output_file_size = bit_manipulating::bit_writer::written_byte_count;
-
-		std::cout << "Compression is done. You can find result in " << output << " file.\n";
-		std::cout << "Source file size: " << input_file_size << "byte.\n";
-		std::cout << "Result file size: " << output_file_size << "byte.\n";
-		std::cout << "Ratio:" << static_cast<double>(input_file_size) / output_file_size << ".\n";
 	} else {
 		std::ifstream in(file);
 		in.exceptions(std::ifstream::badbit | std::ifstream::failbit);
@@ -94,6 +87,15 @@ int main(int argc, char *argv[]) {
 		if (algo_name == huffman_mode_name)
 			huffman_algo(file, output, mode);
 
+		if (mode == 'c') {
+			auto input_file_size = std::filesystem::file_size(file);
+			auto output_file_size = std::filesystem::file_size(output);
+
+			std::cout << "Compression is done. You can find result in " << output << " file.\n";
+			std::cout << "Source file size: " << input_file_size << "byte.\n";
+			std::cout << "Result file size: " << output_file_size << "byte.\n";
+			std::cout << "Ratio:" << static_cast<double>(input_file_size) / output_file_size << ".\n";
+		}
 	}
 	catch (const std::ios_base::failure& e) {
 		std::cerr << e.what();

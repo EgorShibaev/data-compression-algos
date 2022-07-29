@@ -21,6 +21,8 @@ namespace statistic {
 
 		int32_t get(int);
 
+		void set(int, int);
+
 		void unload(std::ostream &);
 
 		int32_t sum();

@@ -1,7 +1,8 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/dca.dir/src/arithmetic/range.cpp.o"
   "CMakeFiles/dca.dir/src/bit_manipulating.cpp.o"
-  "CMakeFiles/dca.dir/src/huffman_coding.cpp.o"
-  "CMakeFiles/dca.dir/src/huffman_tree.cpp.o"
+  "CMakeFiles/dca.dir/src/huffman/huffman_coding.cpp.o"
+  "CMakeFiles/dca.dir/src/huffman/huffman_tree.cpp.o"
   "CMakeFiles/dca.dir/src/main.cpp.o"
   "CMakeFiles/dca.dir/src/statistic.cpp.o"
   "dca"

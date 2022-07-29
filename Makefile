@@ -136,6 +136,36 @@ dca/fast:
 	$(MAKE) -f CMakeFiles/dca.dir/build.make CMakeFiles/dca.dir/build
 .PHONY : dca/fast
 
+src/arithmetic/range.o: src/arithmetic/range.cpp.o
+
+.PHONY : src/arithmetic/range.o
+
+# target to build an object file
+src/arithmetic/range.cpp.o:
+	$(MAKE) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/src/arithmetic/range.cpp.o
+	$(MAKE) -f CMakeFiles/dca.dir/build.make CMakeFiles/dca.dir/src/arithmetic/range.cpp.o
+.PHONY : src/arithmetic/range.cpp.o
+
+src/arithmetic/range.i: src/arithmetic/range.cpp.i
+
+.PHONY : src/arithmetic/range.i
+
+# target to preprocess a source file
+src/arithmetic/range.cpp.i:
+	$(MAKE) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/src/arithmetic/range.cpp.i
+	$(MAKE) -f CMakeFiles/dca.dir/build.make CMakeFiles/dca.dir/src/arithmetic/range.cpp.i
+.PHONY : src/arithmetic/range.cpp.i
+
+src/arithmetic/range.s: src/arithmetic/range.cpp.s
+
+.PHONY : src/arithmetic/range.s
+
+# target to generate assembly for a file
+src/arithmetic/range.cpp.s:
+	$(MAKE) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/src/arithmetic/range.cpp.s
+	$(MAKE) -f CMakeFiles/dca.dir/build.make CMakeFiles/dca.dir/src/arithmetic/range.cpp.s
+.PHONY : src/arithmetic/range.cpp.s
+
 src/bit_manipulating.o: src/bit_manipulating.cpp.o
 
 .PHONY : src/bit_manipulating.o
@@ -166,65 +196,65 @@ src/bit_manipulating.cpp.s:
 	$(MAKE) -f CMakeFiles/dca.dir/build.make CMakeFiles/dca.dir/src/bit_manipulating.cpp.s
 .PHONY : src/bit_manipulating.cpp.s
 
-src/huffman_coding.o: src/huffman_coding.cpp.o
+src/huffman/huffman_coding.o: src/huffman/huffman_coding.cpp.o
 
-.PHONY : src/huffman_coding.o
-
-# target to build an object file
-src/huffman_coding.cpp.o:
-	$(MAKE) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/src/huffman_coding.cpp.o
-	$(MAKE) -f CMakeFiles/dca.dir/build.make CMakeFiles/dca.dir/src/huffman_coding.cpp.o
-.PHONY : src/huffman_coding.cpp.o
-
-src/huffman_coding.i: src/huffman_coding.cpp.i
-
-.PHONY : src/huffman_coding.i
-
-# target to preprocess a source file
-src/huffman_coding.cpp.i:
-	$(MAKE) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/src/huffman_coding.cpp.i
-	$(MAKE) -f CMakeFiles/dca.dir/build.make CMakeFiles/dca.dir/src/huffman_coding.cpp.i
-.PHONY : src/huffman_coding.cpp.i
-
-src/huffman_coding.s: src/huffman_coding.cpp.s
-
-.PHONY : src/huffman_coding.s
-
-# target to generate assembly for a file
-src/huffman_coding.cpp.s:
-	$(MAKE) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/src/huffman_coding.cpp.s
-	$(MAKE) -f CMakeFiles/dca.dir/build.make CMakeFiles/dca.dir/src/huffman_coding.cpp.s
-.PHONY : src/huffman_coding.cpp.s
-
-src/huffman_tree.o: src/huffman_tree.cpp.o
-
-.PHONY : src/huffman_tree.o
+.PHONY : src/huffman/huffman_coding.o
 
 # target to build an object file
-src/huffman_tree.cpp.o:
-	$(MAKE) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/src/huffman_tree.cpp.o
-	$(MAKE) -f CMakeFiles/dca.dir/build.make CMakeFiles/dca.dir/src/huffman_tree.cpp.o
-.PHONY : src/huffman_tree.cpp.o
+src/huffman/huffman_coding.cpp.o:
+	$(MAKE) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/src/huffman/huffman_coding.cpp.o
+	$(MAKE) -f CMakeFiles/dca.dir/build.make CMakeFiles/dca.dir/src/huffman/huffman_coding.cpp.o
+.PHONY : src/huffman/huffman_coding.cpp.o
 
-src/huffman_tree.i: src/huffman_tree.cpp.i
+src/huffman/huffman_coding.i: src/huffman/huffman_coding.cpp.i
 
-.PHONY : src/huffman_tree.i
+.PHONY : src/huffman/huffman_coding.i
 
 # target to preprocess a source file
-src/huffman_tree.cpp.i:
-	$(MAKE) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/src/huffman_tree.cpp.i
-	$(MAKE) -f CMakeFiles/dca.dir/build.make CMakeFiles/dca.dir/src/huffman_tree.cpp.i
-.PHONY : src/huffman_tree.cpp.i
+src/huffman/huffman_coding.cpp.i:
+	$(MAKE) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/src/huffman/huffman_coding.cpp.i
+	$(MAKE) -f CMakeFiles/dca.dir/build.make CMakeFiles/dca.dir/src/huffman/huffman_coding.cpp.i
+.PHONY : src/huffman/huffman_coding.cpp.i
 
-src/huffman_tree.s: src/huffman_tree.cpp.s
+src/huffman/huffman_coding.s: src/huffman/huffman_coding.cpp.s
 
-.PHONY : src/huffman_tree.s
+.PHONY : src/huffman/huffman_coding.s
 
 # target to generate assembly for a file
-src/huffman_tree.cpp.s:
-	$(MAKE) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/src/huffman_tree.cpp.s
-	$(MAKE) -f CMakeFiles/dca.dir/build.make CMakeFiles/dca.dir/src/huffman_tree.cpp.s
-.PHONY : src/huffman_tree.cpp.s
+src/huffman/huffman_coding.cpp.s:
+	$(MAKE) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/src/huffman/huffman_coding.cpp.s
+	$(MAKE) -f CMakeFiles/dca.dir/build.make CMakeFiles/dca.dir/src/huffman/huffman_coding.cpp.s
+.PHONY : src/huffman/huffman_coding.cpp.s
+
+src/huffman/huffman_tree.o: src/huffman/huffman_tree.cpp.o
+
+.PHONY : src/huffman/huffman_tree.o
+
+# target to build an object file
+src/huffman/huffman_tree.cpp.o:
+	$(MAKE) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/src/huffman/huffman_tree.cpp.o
+	$(MAKE) -f CMakeFiles/dca.dir/build.make CMakeFiles/dca.dir/src/huffman/huffman_tree.cpp.o
+.PHONY : src/huffman/huffman_tree.cpp.o
+
+src/huffman/huffman_tree.i: src/huffman/huffman_tree.cpp.i
+
+.PHONY : src/huffman/huffman_tree.i
+
+# target to preprocess a source file
+src/huffman/huffman_tree.cpp.i:
+	$(MAKE) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/src/huffman/huffman_tree.cpp.i
+	$(MAKE) -f CMakeFiles/dca.dir/build.make CMakeFiles/dca.dir/src/huffman/huffman_tree.cpp.i
+.PHONY : src/huffman/huffman_tree.cpp.i
+
+src/huffman/huffman_tree.s: src/huffman/huffman_tree.cpp.s
+
+.PHONY : src/huffman/huffman_tree.s
+
+# target to generate assembly for a file
+src/huffman/huffman_tree.cpp.s:
+	$(MAKE) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/src/huffman/huffman_tree.cpp.s
+	$(MAKE) -f CMakeFiles/dca.dir/build.make CMakeFiles/dca.dir/src/huffman/huffman_tree.cpp.s
+.PHONY : src/huffman/huffman_tree.cpp.s
 
 src/main.o: src/main.cpp.o
 
@@ -320,15 +350,18 @@ help:
 	@echo "... edit_cache"
 	@echo "... test"
 	@echo "... dca"
+	@echo "... src/arithmetic/range.o"
+	@echo "... src/arithmetic/range.i"
+	@echo "... src/arithmetic/range.s"
 	@echo "... src/bit_manipulating.o"
 	@echo "... src/bit_manipulating.i"
 	@echo "... src/bit_manipulating.s"
-	@echo "... src/huffman_coding.o"
-	@echo "... src/huffman_coding.i"
-	@echo "... src/huffman_coding.s"
-	@echo "... src/huffman_tree.o"
-	@echo "... src/huffman_tree.i"
-	@echo "... src/huffman_tree.s"
+	@echo "... src/huffman/huffman_coding.o"
+	@echo "... src/huffman/huffman_coding.i"
+	@echo "... src/huffman/huffman_coding.s"
+	@echo "... src/huffman/huffman_tree.o"
+	@echo "... src/huffman/huffman_tree.i"
+	@echo "... src/huffman/huffman_tree.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"

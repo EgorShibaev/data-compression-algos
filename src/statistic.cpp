@@ -46,6 +46,10 @@ namespace statistic {
 		return data[i];
 	}
 
+	void statistic::set(int i, int value) {
+		data[i] = value;
+	}
+
 	void statistic::unload(std::ostream &out) {
 		for (int32_t i: data) {
 			write_int32_t(out, i);

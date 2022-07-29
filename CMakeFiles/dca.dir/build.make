@@ -70,31 +70,31 @@ CMakeFiles/dca.dir/src/bit_manipulating.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/dca.dir/src/bit_manipulating.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/egor/my-projects/data-compression-algos/src/bit_manipulating.cpp -o CMakeFiles/dca.dir/src/bit_manipulating.cpp.s
 
-CMakeFiles/dca.dir/src/huffman_coding.cpp.o: CMakeFiles/dca.dir/flags.make
-CMakeFiles/dca.dir/src/huffman_coding.cpp.o: src/huffman_coding.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/egor/my-projects/data-compression-algos/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/dca.dir/src/huffman_coding.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/dca.dir/src/huffman_coding.cpp.o -c /home/egor/my-projects/data-compression-algos/src/huffman_coding.cpp
+CMakeFiles/dca.dir/src/huffman/huffman_coding.cpp.o: CMakeFiles/dca.dir/flags.make
+CMakeFiles/dca.dir/src/huffman/huffman_coding.cpp.o: src/huffman/huffman_coding.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/egor/my-projects/data-compression-algos/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/dca.dir/src/huffman/huffman_coding.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/dca.dir/src/huffman/huffman_coding.cpp.o -c /home/egor/my-projects/data-compression-algos/src/huffman/huffman_coding.cpp
 
-CMakeFiles/dca.dir/src/huffman_coding.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/dca.dir/src/huffman_coding.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/egor/my-projects/data-compression-algos/src/huffman_coding.cpp > CMakeFiles/dca.dir/src/huffman_coding.cpp.i
+CMakeFiles/dca.dir/src/huffman/huffman_coding.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/dca.dir/src/huffman/huffman_coding.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/egor/my-projects/data-compression-algos/src/huffman/huffman_coding.cpp > CMakeFiles/dca.dir/src/huffman/huffman_coding.cpp.i
 
-CMakeFiles/dca.dir/src/huffman_coding.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/dca.dir/src/huffman_coding.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/egor/my-projects/data-compression-algos/src/huffman_coding.cpp -o CMakeFiles/dca.dir/src/huffman_coding.cpp.s
+CMakeFiles/dca.dir/src/huffman/huffman_coding.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/dca.dir/src/huffman/huffman_coding.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/egor/my-projects/data-compression-algos/src/huffman/huffman_coding.cpp -o CMakeFiles/dca.dir/src/huffman/huffman_coding.cpp.s
 
-CMakeFiles/dca.dir/src/huffman_tree.cpp.o: CMakeFiles/dca.dir/flags.make
-CMakeFiles/dca.dir/src/huffman_tree.cpp.o: src/huffman_tree.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/egor/my-projects/data-compression-algos/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/dca.dir/src/huffman_tree.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/dca.dir/src/huffman_tree.cpp.o -c /home/egor/my-projects/data-compression-algos/src/huffman_tree.cpp
+CMakeFiles/dca.dir/src/huffman/huffman_tree.cpp.o: CMakeFiles/dca.dir/flags.make
+CMakeFiles/dca.dir/src/huffman/huffman_tree.cpp.o: src/huffman/huffman_tree.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/egor/my-projects/data-compression-algos/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/dca.dir/src/huffman/huffman_tree.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/dca.dir/src/huffman/huffman_tree.cpp.o -c /home/egor/my-projects/data-compression-algos/src/huffman/huffman_tree.cpp
 
-CMakeFiles/dca.dir/src/huffman_tree.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/dca.dir/src/huffman_tree.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/egor/my-projects/data-compression-algos/src/huffman_tree.cpp > CMakeFiles/dca.dir/src/huffman_tree.cpp.i
+CMakeFiles/dca.dir/src/huffman/huffman_tree.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/dca.dir/src/huffman/huffman_tree.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/egor/my-projects/data-compression-algos/src/huffman/huffman_tree.cpp > CMakeFiles/dca.dir/src/huffman/huffman_tree.cpp.i
 
-CMakeFiles/dca.dir/src/huffman_tree.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/dca.dir/src/huffman_tree.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/egor/my-projects/data-compression-algos/src/huffman_tree.cpp -o CMakeFiles/dca.dir/src/huffman_tree.cpp.s
+CMakeFiles/dca.dir/src/huffman/huffman_tree.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/dca.dir/src/huffman/huffman_tree.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/egor/my-projects/data-compression-algos/src/huffman/huffman_tree.cpp -o CMakeFiles/dca.dir/src/huffman/huffman_tree.cpp.s
 
 CMakeFiles/dca.dir/src/statistic.cpp.o: CMakeFiles/dca.dir/flags.make
 CMakeFiles/dca.dir/src/statistic.cpp.o: src/statistic.cpp
@@ -109,9 +109,22 @@ CMakeFiles/dca.dir/src/statistic.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/dca.dir/src/statistic.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/egor/my-projects/data-compression-algos/src/statistic.cpp -o CMakeFiles/dca.dir/src/statistic.cpp.s
 
+CMakeFiles/dca.dir/src/arithmetic/range.cpp.o: CMakeFiles/dca.dir/flags.make
+CMakeFiles/dca.dir/src/arithmetic/range.cpp.o: src/arithmetic/range.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/egor/my-projects/data-compression-algos/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/dca.dir/src/arithmetic/range.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/dca.dir/src/arithmetic/range.cpp.o -c /home/egor/my-projects/data-compression-algos/src/arithmetic/range.cpp
+
+CMakeFiles/dca.dir/src/arithmetic/range.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/dca.dir/src/arithmetic/range.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/egor/my-projects/data-compression-algos/src/arithmetic/range.cpp > CMakeFiles/dca.dir/src/arithmetic/range.cpp.i
+
+CMakeFiles/dca.dir/src/arithmetic/range.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/dca.dir/src/arithmetic/range.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/egor/my-projects/data-compression-algos/src/arithmetic/range.cpp -o CMakeFiles/dca.dir/src/arithmetic/range.cpp.s
+
 CMakeFiles/dca.dir/src/main.cpp.o: CMakeFiles/dca.dir/flags.make
 CMakeFiles/dca.dir/src/main.cpp.o: src/main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/egor/my-projects/data-compression-algos/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/dca.dir/src/main.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/egor/my-projects/data-compression-algos/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/dca.dir/src/main.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/dca.dir/src/main.cpp.o -c /home/egor/my-projects/data-compression-algos/src/main.cpp
 
 CMakeFiles/dca.dir/src/main.cpp.i: cmake_force
@@ -125,22 +138,24 @@ CMakeFiles/dca.dir/src/main.cpp.s: cmake_force
 # Object files for target dca
 dca_OBJECTS = \
 "CMakeFiles/dca.dir/src/bit_manipulating.cpp.o" \
-"CMakeFiles/dca.dir/src/huffman_coding.cpp.o" \
-"CMakeFiles/dca.dir/src/huffman_tree.cpp.o" \
+"CMakeFiles/dca.dir/src/huffman/huffman_coding.cpp.o" \
+"CMakeFiles/dca.dir/src/huffman/huffman_tree.cpp.o" \
 "CMakeFiles/dca.dir/src/statistic.cpp.o" \
+"CMakeFiles/dca.dir/src/arithmetic/range.cpp.o" \
 "CMakeFiles/dca.dir/src/main.cpp.o"
 
 # External object files for target dca
 dca_EXTERNAL_OBJECTS =
 
 dca: CMakeFiles/dca.dir/src/bit_manipulating.cpp.o
-dca: CMakeFiles/dca.dir/src/huffman_coding.cpp.o
-dca: CMakeFiles/dca.dir/src/huffman_tree.cpp.o
+dca: CMakeFiles/dca.dir/src/huffman/huffman_coding.cpp.o
+dca: CMakeFiles/dca.dir/src/huffman/huffman_tree.cpp.o
 dca: CMakeFiles/dca.dir/src/statistic.cpp.o
+dca: CMakeFiles/dca.dir/src/arithmetic/range.cpp.o
 dca: CMakeFiles/dca.dir/src/main.cpp.o
 dca: CMakeFiles/dca.dir/build.make
 dca: CMakeFiles/dca.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/egor/my-projects/data-compression-algos/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX executable dca"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/egor/my-projects/data-compression-algos/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Linking CXX executable dca"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/dca.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

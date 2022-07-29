@@ -11,8 +11,6 @@ namespace bit_manipulating {
 		int offset;
 		std::istream &in;
 	public:
-		static int read_byte_count;
-
 		explicit bit_reader(std::istream &);
 
 		bool read_bit();
@@ -23,8 +21,6 @@ namespace bit_manipulating {
 		int offset;
 		std::ostream &out;
 	public:
-		static int written_byte_count;
-
 		explicit bit_writer(std::ostream &);
 
 		~bit_writer();

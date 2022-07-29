@@ -1,4 +1,4 @@
-#include "huffman_coding.hpp"
+#include "huffman/huffman_coding.hpp"
 #include "constants.hpp"
 #include <iostream>
 

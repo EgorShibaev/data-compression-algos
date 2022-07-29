@@ -1,11 +1,12 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 
-#include "../include/doctest.h"
-#include "../include/statistic.hpp"
-#include "../include/huffman_coding.hpp"
-#include "../include/bit_manipulating.hpp"
-#include "../include/huffman_tree.hpp"
-#include "../include/constants.hpp"
+#include "doctest.h"
+#include "statistic.hpp"
+#include "huffman/huffman_coding.hpp"
+#include "bit_manipulating.hpp"
+#include "huffman/huffman_tree.hpp"
+#include "constants.hpp"
+#include "arithmetic/range.hpp"
 #include <sstream>
 
 TEST_CASE("bit_reader tests") {
@@ -16,7 +17,6 @@ TEST_CASE("bit_reader tests") {
 		stream.put((char)255);
 		for (int i = 0; i < 8; ++i) {
 			CHECK(reader.read_bit());
-			CHECK(bit_manipulating::bit_reader::read_byte_count == 1);
 		}
 	}
 
@@ -24,7 +24,6 @@ TEST_CASE("bit_reader tests") {
 		stream.put((char)0);
 		for (int i = 0; i < 8; ++i) {
 			CHECK(!reader.read_bit());
-			CHECK(bit_manipulating::bit_reader::read_byte_count == 2);
 		}
 	}
 
@@ -33,11 +32,9 @@ TEST_CASE("bit_reader tests") {
 		stream.put((char)0);
 		for (int i = 0; i < 8; ++i) {
 			CHECK(reader.read_bit());
-			CHECK(bit_manipulating::bit_reader::read_byte_count == 3);
 		}
 		for (int i = 0; i < 8; ++i) {
 			CHECK(!reader.read_bit());
-			CHECK(bit_manipulating::bit_reader::read_byte_count == 4);
 		}
 	}
 }
@@ -48,22 +45,14 @@ TEST_CASE("bit_writer test") {
 
 	SUBCASE("one byte 255") {
 		for (int i = 0; i < 8; ++i) {
-			writer.write_bit(1);
-			if (i < 7)
-				CHECK(bit_manipulating::bit_writer::written_byte_count == 0);
-			else
-				CHECK(bit_manipulating::bit_writer::written_byte_count == 1);
+			writer.write_bit(true);
 		}
 		CHECK(stream.get() == 255);
 	}
 
 	SUBCASE("one byte 255") {
 		for (int i = 0; i < 8; ++i) {
-			writer.write_bit(0);
-			if (i < 7)
-				CHECK(bit_manipulating::bit_writer::written_byte_count == 1);
-			else
-				CHECK(bit_manipulating::bit_writer::written_byte_count == 2);
+			writer.write_bit(false);
 		}
 		CHECK(stream.get() == 0);
 	}
@@ -270,4 +259,25 @@ TEST_CASE("huffman tree test") {
 		CHECK(other_tree.root()->str().size() == bytes_count);
 
 	}
+}
+
+TEST_CASE("range test") {
+	range::range r;
+	CHECK(!r.new_bit());
+	r.change_according_to_char(1, 3, 2);
+	CHECK(r.new_bit());
+	CHECK(!r.get_new_bit());
+	CHECK(!r.new_bit());
+	r.change_according_to_char(0, 1, 1);
+	CHECK(!r.new_bit());
+	r.change_according_to_char(1, 2, 1);
+	CHECK(!r.new_bit());
+	r.change_according_to_char(0, 1, 1);
+	CHECK(r.new_bit());
+	CHECK(!r.get_new_bit());
+	CHECK(r.new_bit());
+	CHECK(r.get_new_bit());
+	CHECK(r.new_bit());
+	CHECK(r.get_new_bit());
+	CHECK(!r.new_bit());
 }

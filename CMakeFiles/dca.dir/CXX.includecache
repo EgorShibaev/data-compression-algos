@@ -6,49 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/home/egor/my-projects/data-compression-algos/include/bit_manipulating.hpp
-iostream
--
-string
--
-vector
--
-
 /home/egor/my-projects/data-compression-algos/include/constants.hpp
-string
--
-
-/home/egor/my-projects/data-compression-algos/include/huffman_coding.hpp
-iostream
--
-string
--
-vector
--
-huffman_tree.hpp
-/home/egor/my-projects/data-compression-algos/include/huffman_tree.hpp
-bit_manipulating.hpp
-/home/egor/my-projects/data-compression-algos/include/bit_manipulating.hpp
-
-/home/egor/my-projects/data-compression-algos/include/huffman_tree.hpp
-vector
--
-ostream
--
-istream
--
-string
--
-statistic.hpp
-/home/egor/my-projects/data-compression-algos/include/statistic.hpp
-
-/home/egor/my-projects/data-compression-algos/include/statistic.hpp
-vector
--
-istream
--
-ostream
--
 string
 -
 
@@ -57,32 +15,20 @@ bit_manipulating.hpp
 /home/egor/my-projects/data-compression-algos/src/bit_manipulating.hpp
 constants.hpp
 /home/egor/my-projects/data-compression-algos/src/constants.hpp
-iostream
--
 
-/home/egor/my-projects/data-compression-algos/src/huffman_coding.cpp
-huffman_coding.hpp
-/home/egor/my-projects/data-compression-algos/src/huffman_coding.hpp
+/home/egor/my-projects/data-compression-algos/src/huffman/huffman_coding.cpp
+huffman/huffman_coding.hpp
+/home/egor/my-projects/data-compression-algos/src/huffman/huffman/huffman_coding.hpp
 constants.hpp
-/home/egor/my-projects/data-compression-algos/src/constants.hpp
+/home/egor/my-projects/data-compression-algos/src/huffman/constants.hpp
 iostream
 -
-
-/home/egor/my-projects/data-compression-algos/src/huffman_tree.cpp
-huffman_tree.hpp
--
-set
--
-iostream
--
-constants.hpp
-/home/egor/my-projects/data-compression-algos/src/constants.hpp
 
 /home/egor/my-projects/data-compression-algos/src/main.cpp
-../include/huffman_tree.hpp
-/home/egor/my-projects/data-compression-algos/include/huffman_tree.hpp
-../include/huffman_coding.hpp
-/home/egor/my-projects/data-compression-algos/include/huffman_coding.hpp
+huffman/huffman_tree.hpp
+/home/egor/my-projects/data-compression-algos/src/huffman/huffman_tree.hpp
+huffman/huffman_coding.hpp
+/home/egor/my-projects/data-compression-algos/src/huffman/huffman_coding.hpp
 ../include/constants.hpp
 /home/egor/my-projects/data-compression-algos/include/constants.hpp
 vector
@@ -95,17 +41,7 @@ iostream
 -
 stdexcept
 -
-
-/home/egor/my-projects/data-compression-algos/src/statistic.cpp
-statistic.hpp
-/home/egor/my-projects/data-compression-algos/src/statistic.hpp
-constants.hpp
-/home/egor/my-projects/data-compression-algos/src/constants.hpp
-fstream
--
-iostream
--
-stdexcept
+filesystem
 -
 
 include/bit_manipulating.hpp
@@ -120,7 +56,7 @@ include/constants.hpp
 string
 -
 
-include/huffman_coding.hpp
+include/huffman/huffman_coding.hpp
 iostream
 -
 string
@@ -128,11 +64,11 @@ string
 vector
 -
 huffman_tree.hpp
-include/huffman_tree.hpp
+include/huffman/huffman_tree.hpp
 bit_manipulating.hpp
-include/bit_manipulating.hpp
+include/huffman/bit_manipulating.hpp
 
-include/huffman_tree.hpp
+include/huffman/huffman_tree.hpp
 vector
 -
 ostream
@@ -142,7 +78,7 @@ istream
 string
 -
 statistic.hpp
-include/statistic.hpp
+include/huffman/statistic.hpp
 
 include/statistic.hpp
 vector
