@@ -1,4 +1,0 @@
-/home/egor/my-projects/data-compression-algos/CMakeFiles/rebuild_cache.dir
-/home/egor/my-projects/data-compression-algos/CMakeFiles/edit_cache.dir
-/home/egor/my-projects/data-compression-algos/CMakeFiles/test.dir
-/home/egor/my-projects/data-compression-algos/CMakeFiles/dca.dir
