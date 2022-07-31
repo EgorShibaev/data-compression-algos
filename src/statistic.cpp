@@ -56,10 +56,10 @@ namespace statistic {
 		}
 	}
 
-	int32_t statistic::sum() {
+	int32_t statistic::sum() const {
 		int res = 0;
-		for (int i = 0; i < bytes_count; ++i)
-			res += data[i];
+		for (int i : data)
+			res += i;
 		return res;
 	}
 

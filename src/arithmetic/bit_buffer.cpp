@@ -14,7 +14,17 @@ namespace bit_buffer {
 		value.erase(value.cbegin());
 	}
 
+	bool bit_buffer::front() const {
+		return value[0];
+	}
+
 	size_t bit_buffer::size() const {
 		return value.size();
+	}
+
+	void bit_buffer::show(std::ostream &out) {
+		for (const auto& x: value)
+			out << x;
+		out << "\n";
 	}
 }

@@ -25,7 +25,7 @@ namespace statistic {
 
 		void unload(std::ostream &);
 
-		int32_t sum();
+		int32_t sum() const;
 	};
 
 }

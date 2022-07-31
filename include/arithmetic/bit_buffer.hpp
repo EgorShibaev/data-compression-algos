@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <iostream>
 
 namespace bit_buffer {
 
@@ -15,7 +16,10 @@ namespace bit_buffer {
 
 		void pop_front();
 
-		size_t size() const;
+		[[nodiscard]] bool front() const;
 
+		[[nodiscard]] size_t size() const;
+
+		void show(std::ostream&);
 	};
 }

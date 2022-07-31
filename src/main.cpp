@@ -1,6 +1,7 @@
 #include "huffman/huffman_tree.hpp"
 #include "huffman/huffman_coding.hpp"
-#include "../include/constants.hpp"
+#include "constants.hpp"
+#include "arithmetic/arithmetic_coding.hpp"
 #include <vector>
 #include <tuple>
 #include <fstream>
@@ -64,8 +65,28 @@ void huffman_algo(const std::string& file, const std::string& output, char mode)
 		std::ofstream out(output);
 		out.exceptions(std::ostream::badbit | std::ostream::failbit);
 		dec.decode(out);
+	}
+}
 
-		std::cout << "Decompression is done. You can find result in" << output << ".\n";
+void arithmetic_algo(const std::string& file, const std::string& output, char mode) {
+	if (mode == 'c') {
+		std::ofstream out(output);
+		std::ifstream in(file);
+		out.exceptions(std::ostream::badbit | std::ostream::failbit);
+		in.exceptions(std::ifstream::badbit | std::ifstream::failbit);
+		statistic::statistic stat(file);
+		stat.unload(out);
+		arithmetic_coding::encoder enc(stat, out);
+		enc.encode(in);
+	} else {
+		std::ifstream in(file);
+		in.exceptions(std::ifstream::badbit | std::ifstream::failbit);
+		statistic::statistic stat;
+		stat.load(in);
+		arithmetic_coding::decoder dec(stat, in);
+		std::ofstream out(output);
+		out.exceptions(std::ostream::badbit | std::ostream::failbit);
+		dec.decode(out);
 	}
 }
 
@@ -86,6 +107,8 @@ int main(int argc, char *argv[]) {
 	try {
 		if (algo_name == huffman_mode_name)
 			huffman_algo(file, output, mode);
+		else if (algo_name == arithmetic_mode_name)
+			arithmetic_algo(file, output, mode);
 
 		if (mode == 'c') {
 			auto input_file_size = std::filesystem::file_size(file);
@@ -95,6 +118,9 @@ int main(int argc, char *argv[]) {
 			std::cout << "Source file size: " << input_file_size << "byte.\n";
 			std::cout << "Result file size: " << output_file_size << "byte.\n";
 			std::cout << "Ratio:" << static_cast<double>(input_file_size) / output_file_size << ".\n";
+		}
+		else {
+			std::cout << "Decompression is done. You can find result in" << output << ".\n";
 		}
 	}
 	catch (const std::ios_base::failure& e) {

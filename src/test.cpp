@@ -8,6 +8,7 @@
 #include "constants.hpp"
 #include "arithmetic/range.hpp"
 #include <sstream>
+#include "arithmetic/arithmetic_coding.hpp"
 
 TEST_CASE("bit_reader tests") {
 	std::stringstream stream;
@@ -128,8 +129,8 @@ TEST_CASE("decoder and huffman tree test") {
 	std::stringstream output_stream;
 	std::stringstream input_stream;
 	huffman_coding::decoder dec(std::move(tree), 5, input_stream);
-	input_stream.put(0b10001111);
-	input_stream.put(0b00000001);
+	input_stream.put(static_cast<char>(0b10001111));
+	input_stream.put(static_cast<char>(0b00000001));
 	dec.decode(output_stream);
 	std::string res;
 	output_stream >> res;
@@ -267,6 +268,7 @@ TEST_CASE("range test") {
 	r.change_according_to_char(1, 3, 2);
 	CHECK(r.new_bit());
 	CHECK(!r.get_new_bit());
+	r.pop_new_bit();
 	CHECK(!r.new_bit());
 	r.change_according_to_char(0, 1, 1);
 	CHECK(!r.new_bit());
@@ -275,9 +277,223 @@ TEST_CASE("range test") {
 	r.change_according_to_char(0, 1, 1);
 	CHECK(r.new_bit());
 	CHECK(!r.get_new_bit());
+	r.pop_new_bit();
 	CHECK(r.new_bit());
 	CHECK(r.get_new_bit());
+	r.pop_new_bit();
 	CHECK(r.new_bit());
 	CHECK(r.get_new_bit());
+	r.pop_new_bit();
 	CHECK(!r.new_bit());
+
+	bit_buffer::bit_buffer buf;
+	range::range r2;
+	r2.change_according_to_char(1, 3, 2); // 0.01 to 0.11
+	CHECK(!r2.is_strictly_in(buf));
+	buf.add(false);
+	buf.add(true);
+	CHECK(!r2.is_strictly_in(buf));
+	buf.add(false);
+	CHECK(r2.is_strictly_in(buf));
+	buf.pop_front(); buf.pop_front(); buf.pop_front();
+	buf.add(false);
+	buf.add(false);
+	buf.add(true);
+	CHECK(!r2.is_strictly_in(buf));
+	buf.add(true);
+	CHECK(r2.is_strictly_in(buf));
+	buf.pop_front(); buf.pop_front(); buf.pop_front(); buf.pop_front();
+	buf.add(false);
+	buf.add(true);
+	buf.add(true);
+	CHECK(!r2.is_strictly_in(buf));
+	buf.add(false);
+	CHECK(!r2.is_strictly_in(buf));
+
+	range::range r3;
+	r3.change_according_to_char(0, 2, 2); // [0 1] -> [0.0 0.1]
+	r3.change_according_to_char(2, 4, 2); // [0.0 0.1] -> [0.01 0.10]
+	r3.change_according_to_char(0, 2, 2); // [0.01 0.10] -> [0.010 0.011]
+	std::stringstream stream;
+	r3.show(stream);
+	std::string left, right;
+	stream >> left >> right;
+	while (left[left.length() - 1] == '0')
+		left.pop_back();
+	while (right[right.length() - 1] == '0')
+		right.pop_back();
+	CHECK(left == "001");
+	CHECK(right == "0011");
+}
+
+TEST_CASE("adj stat test") {
+	statistic::statistic stat;
+	stat.set(0, 1);
+	stat.set(1, 1);
+	auto adj = arithmetic_coding::adjust_stat(stat);
+	CHECK(adj.get(0) == 1);
+	CHECK(adj.get(1) == 1);
+	CHECK(adj.get(2) == 0);
+	stat.set(2, 1);
+	adj = arithmetic_coding::adjust_stat(stat);
+	CHECK(adj.get(0) == 2);
+	CHECK(adj.get(1) == 1);
+	CHECK(adj.get(2) == 1);
+	stat.set(1, 3);
+	adj = arithmetic_coding::adjust_stat(stat); // 1 3 1 -> 1 4 1 -> 2 5 1
+	CHECK(adj.get(0) == 2);
+	CHECK(adj.get(1) == 5);
+	CHECK(adj.get(2) == 1);
+
+}
+
+TEST_CASE("arithmetic encoder test") {
+	SUBCASE("AAA") {
+		std::stringstream output_stream;
+		std::stringstream input_stream;
+		statistic::statistic stat;
+		stat.set(static_cast<unsigned char>('A'), 3); // adj: A-4
+		{
+			arithmetic_coding::encoder encoder(stat, output_stream);
+			input_stream << "AAA";
+			encoder.encode(input_stream);
+		} // [0 1] -> [0 1] -> [0 1] -> [0 1] -> 0.1
+		CHECK(static_cast<unsigned char>(output_stream.get()) == 0b00000010);
+	}
+
+	SUBCASE("abc") {
+		std::stringstream output_stream;
+		std::stringstream input_stream;
+		statistic::statistic stat;
+		stat.set(static_cast<unsigned char>('a'), 1);
+		stat.set(static_cast<unsigned char>('b'), 1);
+		stat.set(static_cast<unsigned char>('c'), 1); // adj: a-2 b-1 c-1
+		{
+			arithmetic_coding::encoder encoder(stat, output_stream);
+			input_stream << "abc";
+			encoder.encode(input_stream);
+		} // [0 1] -> [0.0 0.1] -> [0.010 0.011] -> [0.01011  0.01100] -> 0.010111
+		CHECK(static_cast<unsigned char>(output_stream.get()) == 0b01110100);
+	}
+
+	SUBCASE("ab") {
+		std::stringstream output_stream;
+		std::stringstream input_stream;
+		statistic::statistic stat;
+		stat.set(static_cast<unsigned char>('a'), 1);
+		stat.set(static_cast<unsigned char>('b'), 1);
+		{
+			arithmetic_coding::encoder encoder(stat, output_stream);
+			input_stream << "ab";
+			encoder.encode(input_stream);
+		} // [0 1] -> [0.0; 0.1] -> [0.01 0.10] -> [0.011]
+		CHECK(static_cast<unsigned char>(output_stream.get()) == 0b0001100);
+	}
+
+	SUBCASE("abb") {
+		std::stringstream output_stream;
+		std::stringstream input_stream;
+		statistic::statistic stat;
+		stat.set(static_cast<unsigned char>('a'), 1);
+		stat.set(static_cast<unsigned char>('b'), 2); // adj a-2 b-2
+		{
+			arithmetic_coding::encoder encoder(stat, output_stream);
+			input_stream << "abb";
+			encoder.encode(input_stream);
+		} // [0 1] -> [0.0 0.1] -> [0.01 0.10] -> [0.011 0.100] -> 0.0111
+		CHECK(static_cast<unsigned char>(output_stream.get()) == 0b0011100);
+	}
+}
+
+TEST_CASE("check arithmetic decode") {
+	SUBCASE("AAA") {
+		std::stringstream output_stream;
+		std::stringstream input_stream;
+		statistic::statistic stat;
+		stat.set(static_cast<unsigned char>('A'), 3); // adj: A-4
+		{
+			arithmetic_coding::decoder decoder(stat, input_stream);
+			input_stream.put(static_cast<char>(0b00000010));
+			decoder.decode(output_stream);
+		} // [0 1] -> [0 1] -> [0 1] -> [0 1] -> 0.1
+		std::string res;
+		output_stream >> res;
+		CHECK(res == "AAA");
+	}
+
+	SUBCASE("abc") {
+		std::stringstream output_stream;
+		std::stringstream input_stream;
+		statistic::statistic stat;
+		stat.set(static_cast<unsigned char>('a'), 1);
+		stat.set(static_cast<unsigned char>('b'), 1);
+		stat.set(static_cast<unsigned char>('c'), 1); // adj: a-2 b-1 c-1
+		{
+			arithmetic_coding::decoder decoder(stat, input_stream);
+			input_stream.put(static_cast<char>(0b01110100));
+			decoder.decode(output_stream);
+		}
+		std::string res;
+		output_stream >> res;
+		CHECK(res == "abc");
+	}
+
+	SUBCASE("ab") {
+		std::stringstream output_stream;
+		std::stringstream input_stream;
+		statistic::statistic stat;
+		stat.set(static_cast<unsigned char>('a'), 1);
+		stat.set(static_cast<unsigned char>('b'), 1);
+		{
+			arithmetic_coding::decoder decoder(stat, input_stream);
+			input_stream.put(static_cast<char>(0b0001100));
+			decoder.decode(output_stream);
+		}
+		std::string res;
+		output_stream >> res;
+		CHECK(res == "ab");
+	}
+
+	SUBCASE("abb") {
+		std::stringstream output_stream;
+		std::stringstream input_stream;
+		statistic::statistic stat;
+		stat.set(static_cast<unsigned char>('a'), 1);
+		stat.set(static_cast<unsigned char>('b'), 2);
+		{
+			arithmetic_coding::decoder decoder(stat, input_stream);
+			input_stream.put(static_cast<char>(0b0011100));
+			decoder.decode(output_stream);
+		}
+		std::string res;
+		output_stream >> res;
+		CHECK(res == "abb");
+
+	}
+}
+
+TEST_CASE("arithmetic encoder + decoder test") {
+	std::string text = "abcdef";
+	std::stringstream stream1;
+	std::stringstream stream2;
+	std::stringstream stream3;
+	stream1 << text;
+	statistic::statistic stat;
+	stat.set(static_cast<unsigned char>('a'), 1);
+	stat.set(static_cast<unsigned char>('b'), 1);
+	stat.set(static_cast<unsigned char>('c'), 1);
+	stat.set(static_cast<unsigned char>('d'), 1);
+	stat.set(static_cast<unsigned char>('e'), 1);
+	stat.set(static_cast<unsigned char>('f'), 1);
+	{
+		arithmetic_coding::encoder enc(stat, stream2);
+		enc.encode(stream1);
+	}
+	{
+		arithmetic_coding::decoder dec(stat, stream2);
+		dec.decode(stream3);
+	}
+	std::string res;
+	stream3 >> res;
+	CHECK(text == res);
 }

@@ -7,24 +7,35 @@
 
 namespace arithmetic_coding {
 
-	class encoder {
+	statistic::statistic adjust_stat(const statistic::statistic&);
 
+	class encoder {
 		range::range range;
 		statistic::statistic adjusted_statistic;
 		bit_manipulating::bit_writer writer;
 		int symbols_count;
-		int stat_sum_pow; // pow of 2 that is nearly adj_stat.sum()
+		int stat_sum_log; // pow of 2 that is adj_stat.sum()
 
 	public:
 
-		explicit encoder(const statistic::statistic&, std::ostream &, int sybmols_count);
+		explicit encoder(const statistic::statistic&, std::ostream &);
 
 		void encode(std::istream &);
 
 	};
 
 	class decoder {
+		range::range range;
+		statistic::statistic adjusted_statistic;
+		bit_manipulating::bit_reader reader;
+		int symbol_count;
+		int stat_sum_log;
 
+	public:
+
+		explicit decoder(const statistic::statistic&, std::istream &);
+
+		void decode(std::ostream&);
 	};
 
 }

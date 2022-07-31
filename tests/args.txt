@@ -1,0 +1,19 @@
+SAMPLE 1
+encode huffman
+-c -f tests/sample1.txt -o OUTPUT_FILE -huff
+decode huffman
+-u -f OUTPUT_FILE -o tests/sample_1_cd.txt -huff
+encode arithmetic
+-c -f tests/sample1.txt -o OUTPUT_FILE -ar
+decode arithmetic
+-u -f OUTPUT_FILE -o tests/sample_1_cd.txt -ar
+
+SAMPLE 2
+encode huffman
+-c -f tests/sample2.bmp -o OUTPUT_FILE -huff
+decode huffman
+-u -f OUTPUT_FILE -o tests/sample2_cd.bmp -huff
+encode arithmetic
+-c -f tests/sample2.bmp -o OUTPUT_FILE -ar
+decode arithmetic
+-u -f OUTPUT_FILE -o tests/sample2_cd.bmp -ar
