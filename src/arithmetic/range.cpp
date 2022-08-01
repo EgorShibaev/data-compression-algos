@@ -51,8 +51,12 @@ namespace range {
 	}
 
 	range::exact_double &range::exact_double::operator/=(int n) {
+		int len = static_cast<int>(value.size());
+		value.resize(value.size() + n);
+		for (int i = len - 1; i > -1; --i)
+			value[i + n] = value[i];
 		for (int i = 0; i < n; ++i)
-			value.insert(value.cbegin(), false);
+			value[i] = false;
 		return *this;
 	}
 
@@ -88,25 +92,9 @@ namespace range {
 		out << std::endl;
 	}
 
-	range::exact_double range::exact_double::smallest_more() {
-		assert(!front_bit());
-		exact_double res(false);
-		exact_double addition(true);
-		int i = 1;
-		while (i < static_cast<int>(value.size()) && value[i]) {
-			++i;
-			addition /= 1;
-			res += addition;
-		}
-		addition /= 1;
-		res += addition;
-
-		return res;
-	}
-
 	void range::exact_double::shrink_by_increasing() {
 		shrink_by_zero_deleting();
-		int max_size = 50; // later move to consts
+		int max_size = 25; // later move to consts
 		if (static_cast<int>(value.size()) > max_size) {
 			int i = max_size;
 			while (i < static_cast<int>(value.size()) && value[i])
@@ -118,15 +106,17 @@ namespace range {
 
 	void range::exact_double::shrink_by_decreasing() {
 		shrink_by_zero_deleting();
-		int max_size = 50; // later move to consts
+		int max_size = 25; // later move to consts
 		if (static_cast<int>(value.size()) > max_size) {
 			value.resize(max_size);
 		}
 	}
 
 	void range::exact_double::shrink_by_zero_deleting() {
-		while (!value.empty() && !value[value.size() - 1])
-			value.pop_back();
+		int len = static_cast<int>(value.size());
+		while (len > 0 && !value[len - 1])
+			--len;
+		value.resize(len);
 	}
 
 	range::range() : left(false), right(true) {}
@@ -150,25 +140,15 @@ namespace range {
 
 
 	void range::change_according_to_char(int new_left, int new_right, int n) {
-		auto dist = right;
+		auto dist = std::move(right);
 		dist -= left;
 		dist /= n;
+		auto dist2 = dist;
 		dist *= new_left;
-		auto next_left = left;
-		next_left += dist;
-		dist = right;
-		dist -= left;
-		dist /= n;
-		dist *= new_right;
-		auto next_right = left;
-		next_right += dist;
-		left = next_left;
-		right = next_right;
-
-//		std::cout << left.size() << "\n";
-//		std::cout << right.size() << "\n";
-//		left.show(std::cout, {});
-//		right.show(std::cout, {});
+		dist2 *= new_right;
+		right = left;
+		right += dist2;
+		left += dist;
 	}
 
 	bool range::is_strictly_in(const bit_buffer::bit_buffer &val) {

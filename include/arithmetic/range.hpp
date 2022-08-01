@@ -34,7 +34,7 @@ namespace range {
 
 			Compare_result compare(const bit_buffer::bit_buffer&, const std::deque<bool>&);
 
-			int size() const;
+			[[nodiscard]] int size() const;
 
 			void shrink_by_zero_deleting();
 
@@ -43,8 +43,6 @@ namespace range {
 			void shrink_by_decreasing();
 
 			void show(std::ostream&, const std::deque<bool>&);
-
-			exact_double smallest_more(); // should start with 0
 		};
 
 		std::deque<bool> common_part;

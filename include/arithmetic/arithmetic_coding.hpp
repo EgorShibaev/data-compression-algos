@@ -27,9 +27,9 @@ namespace arithmetic_coding {
 	class decoder {
 		range::range range;
 		statistic::statistic adjusted_statistic;
-		bit_manipulating::bit_reader reader;
 		int symbol_count;
 		int stat_sum_log;
+		std::istream& in;
 
 	public:
 

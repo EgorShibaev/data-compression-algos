@@ -65,15 +65,31 @@ namespace arithmetic_coding {
 
 
 	decoder::decoder(const statistic::statistic &stat, std::istream &in) :
-			adjusted_statistic(adjust_stat(stat)), reader(in), symbol_count(stat.sum()) {
+			adjusted_statistic(adjust_stat(stat)), symbol_count(stat.sum()), in(in) {
 		stat_sum_log = my_log_2(adjusted_statistic.sum());
 
 	}
 
-	int check_new_bit(range::range *next_ranges, const bit_buffer::bit_buffer& buf) {
-		for (int i = 0; i < bytes_count; ++i)
-			if (next_ranges[i].is_strictly_in(buf))
-				return i;
+	int check_new_bit(
+			range::range &cur_range, int32_t *prefix_sums, const bit_buffer::bit_buffer &buf, int stat_sum_log) {
+		if (!cur_range.is_strictly_in(buf))
+			return -1;
+		int left = 0;
+		int right = bytes_count;
+		while (right - left > 1) {
+			int mid = (left + right) / 2;
+			auto next_range = cur_range;
+			next_range.change_according_to_char(
+					prefix_sums[mid], prefix_sums[bytes_count], stat_sum_log);
+			if (next_range.is_strictly_in(buf))
+				left = mid;
+			else
+				right = mid;
+		}
+		auto candidate = cur_range;
+		candidate.change_according_to_char(prefix_sums[left], prefix_sums[left + 1], stat_sum_log);
+		if (candidate.is_strictly_in(buf))
+			return left;
 		return -1;
 	}
 
@@ -85,24 +101,21 @@ namespace arithmetic_coding {
 		bit_buffer::bit_buffer buf;
 
 		for (int i = 0; i < symbol_count; ++i) {
-			range::range next_ranges[bytes_count];
 
-			for (int ch = 0; ch < bytes_count; ++ch) {
-				next_ranges[ch] = range;
-				next_ranges[ch].change_according_to_char(
-						prefix_sums[ch], prefix_sums[ch + 1], stat_sum_log);
-			}
-
-			int next_char = check_new_bit(next_ranges, buf);
+			int next_char = check_new_bit(range, prefix_sums, buf, stat_sum_log);
 
 			while (next_char == -1) {
-				buf.add(reader.read_bit());
-				next_char = check_new_bit(next_ranges, buf);
-				// I know it is slow. Later I'll optimize it. Read blocks or smth.
+				char ch;
+				in.get(ch);
+				auto byte = static_cast<unsigned char>(ch);
+				for (int bit = 0; bit < 8; ++bit)
+					buf.add((byte >> bit) & 1);
+				next_char = check_new_bit(range, prefix_sums, buf, stat_sum_log);
 			}
 
 			out.put(static_cast<char>(static_cast<unsigned char>(next_char)));
-			range = next_ranges[next_char];
+			range.change_according_to_char(
+					prefix_sums[next_char], prefix_sums[next_char + 1], stat_sum_log);
 
 			while (range.new_bit() && range.get_new_bit() == buf.front()) {
 				range.pop_new_bit();

@@ -8,6 +8,7 @@
 #include <iostream>
 #include <stdexcept>
 #include <filesystem>
+#include <ctime>
 
 using std::string;
 
@@ -104,6 +105,8 @@ int main(int argc, char *argv[]) {
 	auto mode = std::get<0>(tuple);
 	auto algo_name = std::get<3>(tuple);
 
+	auto start_time = clock();
+
 	try {
 		if (algo_name == huffman_mode_name)
 			huffman_algo(file, output, mode);
@@ -120,11 +123,13 @@ int main(int argc, char *argv[]) {
 			std::cout << "Ratio:" << static_cast<double>(input_file_size) / output_file_size << ".\n";
 		}
 		else {
-			std::cout << "Decompression is done. You can find result in" << output << ".\n";
+			std::cout << "Decompression is done. You can find result in " << output << ".\n";
 		}
 	}
 	catch (const std::ios_base::failure& e) {
 		std::cerr << e.what();
 		return 1;
 	}
+
+	std::cout << "Time: " << static_cast<double>(clock() - start_time) / CLOCKS_PER_SEC << "sec\n";
 }
