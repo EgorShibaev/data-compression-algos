@@ -42,7 +42,7 @@ namespace statistic {
 		}
 	}
 
-	int32_t statistic::get(int i) {
+	int32_t statistic::get(int i) const {
 		return data[i];
 	}
 

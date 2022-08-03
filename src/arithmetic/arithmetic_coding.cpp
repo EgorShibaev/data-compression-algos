@@ -16,7 +16,7 @@ namespace arithmetic_coding {
 		auto sum = res.sum();
 		int pow = my_log_2(sum);
 		for (int i = 0; i < bytes_count; ++i) {
-			res.set(i, (res.get(i) * (1 << pow)) / sum);
+			res.set(i, static_cast<int>((res.get(i) * 1ll * (1 << pow)) / sum));
 		}
 		int curr_i = 0;
 		int curr_sum = res.sum();
@@ -33,7 +33,7 @@ namespace arithmetic_coding {
 	}
 
 	encoder::encoder(const statistic::statistic &stat, std::ostream &out) :
-			adjusted_statistic(adjust_stat(stat)), writer(out), symbols_count(stat.sum()) {
+			adjusted_statistic(adjust_stat(stat)), out(out), symbols_count(stat.sum()) {
 		stat_sum_log = my_log_2(adjusted_statistic.sum());
 	}
 
@@ -53,12 +53,11 @@ namespace arithmetic_coding {
 
 			if (i == symbols_count - 1)
 				range.choose_point();
-
-			while (range.new_bit()) {
-				writer.write_bit(range.get_new_bit());
-				range.pop_new_bit();
+			while (range.new_byte()) {
+				auto byte = range.get_new_byte();
+				out.put(static_cast<char>(byte));
+				range.pop_new_byte();
 			}
-
 			range.shrink();
 		}
 	}
@@ -108,8 +107,7 @@ namespace arithmetic_coding {
 				char ch;
 				in.get(ch);
 				auto byte = static_cast<unsigned char>(ch);
-				for (int bit = 0; bit < 8; ++bit)
-					buf.add((byte >> bit) & 1);
+				buf.add(byte);
 				next_char = check_new_bit(range, prefix_sums, buf, stat_sum_log);
 			}
 
@@ -117,8 +115,8 @@ namespace arithmetic_coding {
 			range.change_according_to_char(
 					prefix_sums[next_char], prefix_sums[next_char + 1], stat_sum_log);
 
-			while (range.new_bit() && range.get_new_bit() == buf.front()) {
-				range.pop_new_bit();
+			while (range.new_byte() && range.get_new_byte() == buf.front()) {
+				range.pop_new_byte();
 				buf.pop_front();
 			}
 

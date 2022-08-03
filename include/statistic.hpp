@@ -19,7 +19,7 @@ namespace statistic {
 
 		void load(std::istream &in);
 
-		int32_t get(int);
+		int32_t get(int) const;
 
 		void set(int, int);
 

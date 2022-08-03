@@ -7,32 +7,35 @@
 
 namespace range {
 
+	void show_byte(uint8_t byte, std::ostream &out);
+
 	class range {
 
 		class exact_double {
-			std::vector<bool> value; // start with ones - 0.1101 saved as {0, 1, 1, 0, 1};
+
+			std::vector<uint8_t> value; // start with ones - 0.1101 saved as {0, 1, 1, 0, 1};
 
 		public:
 
 			explicit exact_double(bool value);
 
-			bool front_bit();
+			uint8_t front_byte();
 
 			void pop_front();
 
-			exact_double& operator+=(const exact_double&);
+			exact_double &operator+=(const exact_double &);
 
-			exact_double& operator-=(const exact_double&);
+			exact_double &operator-=(const exact_double &);
 
-			exact_double& operator*=(int value);
+			exact_double &operator*=(int value);
 
-			exact_double& operator/=(int n); // div by 2 ^ n;
+			exact_double &operator/=(int n); // div by 2 ^ n;
 
 			enum class Compare_result {
 				less, more, maybe_eq
 			};
 
-			Compare_result compare(const bit_buffer::bit_buffer&, const std::deque<bool>&);
+			Compare_result compare(const bit_buffer::bit_buffer &, const std::deque<uint8_t> &);
 
 			[[nodiscard]] int size() const;
 
@@ -42,10 +45,10 @@ namespace range {
 
 			void shrink_by_decreasing();
 
-			void show(std::ostream&, const std::deque<bool>&);
+			void show(std::ostream &, const std::deque<uint8_t> &);
 		};
 
-		std::deque<bool> common_part;
+		std::deque<uint8_t> common_part;
 		exact_double left;
 		exact_double right;
 
@@ -53,21 +56,22 @@ namespace range {
 
 		range();
 
-		bool get_new_bit();
+		uint8_t get_new_byte();
 
-		void pop_new_bit();
+		void pop_new_byte();
 
-		bool new_bit();
+		bool new_byte();
 
 		void change_according_to_char(int new_left, int new_right, int n); // 2^n - sum by all stat
 
-		bool is_strictly_in(const bit_buffer::bit_buffer&);
+		bool is_strictly_in(const bit_buffer::bit_buffer &);
 
 		void choose_point();
 
 		void shrink();
 
-		void show(std::ostream&);
+		void show(std::ostream &);
+
 	};
 
 

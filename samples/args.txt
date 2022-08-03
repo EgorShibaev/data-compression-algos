@@ -1,0 +1,30 @@
+SAMPLE 1
+encode huffman
+-c -f samples/sample1.txt -o OUTPUT_FILE -huff
+decode huffman
+-u -f OUTPUT_FILE -o samples/sample_1_cd.txt -huff
+encode arithmetic
+-c -f samples/sample1.txt -o OUTPUT_FILE -ar
+decode arithmetic
+-u -f OUTPUT_FILE -o samples/sample_1_cd.txt -ar
+
+SAMPLE 2
+encode huffman
+-c -f samples/sample2.bmp -o OUTPUT_FILE -huff
+decode huffman
+-u -f OUTPUT_FILE -o samples/sample2_cd.bmp -huff
+encode arithmetic
+-c -f samples/sample2.bmp -o OUTPUT_FILE -ar
+decode arithmetic
+-u -f OUTPUT_FILE -o samples/sample2_cd.bmp -ar
+
+SAMPLE 3
+encode huffman
+-c -f samples/sample3.txt -o OUTPUT_FILE -huff
+decode huffman
+-u -f OUTPUT_FILE -o samples/sample3_cd.txt -huff
+encode arithmetic
+-c -f samples/sample3.txt -o OUTPUT_FILE -ar
+decode arithmetic
+-u -f OUTPUT_FILE -o samples/sample3_cd.txt -ar
+

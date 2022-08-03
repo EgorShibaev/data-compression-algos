@@ -12,7 +12,7 @@ namespace arithmetic_coding {
 	class encoder {
 		range::range range;
 		statistic::statistic adjusted_statistic;
-		bit_manipulating::bit_writer writer;
+		std::ostream& out;
 		int symbols_count;
 		int stat_sum_log; // pow of 2 that is adj_stat.sum()
 

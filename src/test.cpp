@@ -264,51 +264,39 @@ TEST_CASE("huffman tree test") {
 
 TEST_CASE("range test") {
 	range::range r;
-	CHECK(!r.new_bit());
-	r.change_according_to_char(1, 3, 2);
-	CHECK(r.new_bit());
-	CHECK(!r.get_new_bit());
-	r.pop_new_bit();
-	CHECK(!r.new_bit());
-	r.change_according_to_char(0, 1, 1);
-	CHECK(!r.new_bit());
-	r.change_according_to_char(1, 2, 1);
-	CHECK(!r.new_bit());
-	r.change_according_to_char(0, 1, 1);
-	CHECK(r.new_bit());
-	CHECK(!r.get_new_bit());
-	r.pop_new_bit();
-	CHECK(r.new_bit());
-	CHECK(r.get_new_bit());
-	r.pop_new_bit();
-	CHECK(r.new_bit());
-	CHECK(r.get_new_bit());
-	r.pop_new_bit();
-	CHECK(!r.new_bit());
+	CHECK(!r.new_byte());
+	r.change_according_to_char(14, 15, 9);// [0.000001110 0.000001111]
+	CHECK(r.new_byte());
+	CHECK(r.get_new_byte() == 0b000000000);
+	r.pop_new_byte();
+	CHECK(r.new_byte());
+	CHECK(r.get_new_byte() == 0b00000111);
+	r.pop_new_byte();
+	CHECK(!r.new_byte());
 
-	bit_buffer::bit_buffer buf;
-	range::range r2;
-	r2.change_according_to_char(1, 3, 2); // 0.01 to 0.11
-	CHECK(!r2.is_strictly_in(buf));
-	buf.add(false);
-	buf.add(true);
-	CHECK(!r2.is_strictly_in(buf));
-	buf.add(false);
-	CHECK(r2.is_strictly_in(buf));
-	buf.pop_front(); buf.pop_front(); buf.pop_front();
-	buf.add(false);
-	buf.add(false);
-	buf.add(true);
-	CHECK(!r2.is_strictly_in(buf));
-	buf.add(true);
-	CHECK(r2.is_strictly_in(buf));
-	buf.pop_front(); buf.pop_front(); buf.pop_front(); buf.pop_front();
-	buf.add(false);
-	buf.add(true);
-	buf.add(true);
-	CHECK(!r2.is_strictly_in(buf));
-	buf.add(false);
-	CHECK(!r2.is_strictly_in(buf));
+//	bit_buffer::bit_buffer buf;
+//	range::range r2;
+//	r2.change_according_to_char(1, 3, 2); // 0.01 to 0.11
+//	CHECK(!r2.is_strictly_in(buf));
+//	buf.add(false);
+//	buf.add(true);
+//	CHECK(!r2.is_strictly_in(buf));
+//	buf.add(false);
+//	CHECK(r2.is_strictly_in(buf));
+//	buf.pop_front(); buf.pop_front(); buf.pop_front();
+//	buf.add(false);
+//	buf.add(false);
+//	buf.add(true);
+//	CHECK(!r2.is_strictly_in(buf));
+//	buf.add(true);
+//	CHECK(r2.is_strictly_in(buf));
+//	buf.pop_front(); buf.pop_front(); buf.pop_front(); buf.pop_front();
+//	buf.add(false);
+//	buf.add(true);
+//	buf.add(true);
+//	CHECK(!r2.is_strictly_in(buf));
+//	buf.add(false);
+//	CHECK(!r2.is_strictly_in(buf));
 
 	range::range r3;
 	r3.change_according_to_char(0, 2, 2); // [0 1] -> [0.0 0.1]
@@ -322,8 +310,8 @@ TEST_CASE("range test") {
 		left.pop_back();
 	while (right[right.length() - 1] == '0')
 		right.pop_back();
-	CHECK(left == "001");
-	CHECK(right == "0011");
+	CHECK(left == "0000000001");
+	CHECK(right == "00000000011");
 }
 
 TEST_CASE("adj stat test") {
@@ -358,7 +346,8 @@ TEST_CASE("arithmetic encoder test") {
 			input_stream << "AAA";
 			encoder.encode(input_stream);
 		} // [0 1] -> [0 1] -> [0 1] -> [0 1] -> 0.1
-		CHECK(static_cast<unsigned char>(output_stream.get()) == 0b00000010);
+		CHECK(static_cast<unsigned char>(output_stream.get()) == 0b00000000);
+		CHECK(static_cast<unsigned char>(output_stream.get()) == 0b10000000);
 	}
 
 	SUBCASE("abc") {
@@ -373,7 +362,8 @@ TEST_CASE("arithmetic encoder test") {
 			input_stream << "abc";
 			encoder.encode(input_stream);
 		} // [0 1] -> [0.0 0.1] -> [0.010 0.011] -> [0.01011  0.01100] -> 0.010111
-		CHECK(static_cast<unsigned char>(output_stream.get()) == 0b01110100);
+		CHECK(static_cast<unsigned char>(output_stream.get()) == 0b00000000);
+		CHECK(static_cast<unsigned char>(output_stream.get()) == 0b01011100);
 	}
 
 	SUBCASE("ab") {
@@ -387,7 +377,8 @@ TEST_CASE("arithmetic encoder test") {
 			input_stream << "ab";
 			encoder.encode(input_stream);
 		} // [0 1] -> [0.0; 0.1] -> [0.01 0.10] -> [0.011]
-		CHECK(static_cast<unsigned char>(output_stream.get()) == 0b0001100);
+		CHECK(static_cast<unsigned char>(output_stream.get()) == 0b00000000);
+		CHECK(static_cast<unsigned char>(output_stream.get()) == 0b01100000);
 	}
 
 	SUBCASE("abb") {
@@ -401,7 +392,8 @@ TEST_CASE("arithmetic encoder test") {
 			input_stream << "abb";
 			encoder.encode(input_stream);
 		} // [0 1] -> [0.0 0.1] -> [0.01 0.10] -> [0.011 0.100] -> 0.0111
-		CHECK(static_cast<unsigned char>(output_stream.get()) == 0b0011100);
+		CHECK(static_cast<unsigned char>(output_stream.get()) == 0b00000000);
+		CHECK(static_cast<unsigned char>(output_stream.get()) == 0b01110000);
 	}
 }
 
@@ -413,7 +405,8 @@ TEST_CASE("check arithmetic decode") {
 		stat.set(static_cast<unsigned char>('A'), 3); // adj: A-4
 		{
 			arithmetic_coding::decoder decoder(stat, input_stream);
-			input_stream.put(static_cast<char>(0b00000010));
+			input_stream.put(static_cast<char>(0b00000000));
+			input_stream.put(static_cast<char>(0b10000000));
 			decoder.decode(output_stream);
 		} // [0 1] -> [0 1] -> [0 1] -> [0 1] -> 0.1
 		std::string res;
@@ -430,7 +423,8 @@ TEST_CASE("check arithmetic decode") {
 		stat.set(static_cast<unsigned char>('c'), 1); // adj: a-2 b-1 c-1
 		{
 			arithmetic_coding::decoder decoder(stat, input_stream);
-			input_stream.put(static_cast<char>(0b01110100));
+			input_stream.put(static_cast<char>(0b00000000));
+			input_stream.put(static_cast<char>(0b01011100));
 			decoder.decode(output_stream);
 		}
 		std::string res;
@@ -446,7 +440,8 @@ TEST_CASE("check arithmetic decode") {
 		stat.set(static_cast<unsigned char>('b'), 1);
 		{
 			arithmetic_coding::decoder decoder(stat, input_stream);
-			input_stream.put(static_cast<char>(0b0001100));
+			input_stream.put(static_cast<char>(0b00000000));
+			input_stream.put(static_cast<char>(0b01100000));
 			decoder.decode(output_stream);
 		}
 		std::string res;
@@ -462,7 +457,8 @@ TEST_CASE("check arithmetic decode") {
 		stat.set(static_cast<unsigned char>('b'), 2);
 		{
 			arithmetic_coding::decoder decoder(stat, input_stream);
-			input_stream.put(static_cast<char>(0b0011100));
+			input_stream.put(static_cast<char>(0b00000000));
+			input_stream.put(static_cast<char>(0b01110000));
 			decoder.decode(output_stream);
 		}
 		std::string res;
