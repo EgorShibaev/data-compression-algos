@@ -9,28 +9,31 @@
 #include "arithmetic/range.hpp"
 #include <sstream>
 #include "arithmetic/arithmetic_coding.hpp"
+#include "BTW/btw.hpp"
+#include "BTW/rle.hpp"
+#include "BTW/btw_coding.hpp"
 
 TEST_CASE("bit_reader tests") {
 	std::stringstream stream;
 	bit_manipulating::bit_reader reader(stream);
 
 	SUBCASE("one byte 255") {
-		stream.put((char)255);
+		stream.put((char) 255);
 		for (int i = 0; i < 8; ++i) {
 			CHECK(reader.read_bit());
 		}
 	}
 
 	SUBCASE("one byte 0") {
-		stream.put((char)0);
+		stream.put((char) 0);
 		for (int i = 0; i < 8; ++i) {
 			CHECK(!reader.read_bit());
 		}
 	}
 
 	SUBCASE("one two bytes: 255 and 0") {
-		stream.put((char)255);
-		stream.put((char)0);
+		stream.put((char) 255);
+		stream.put((char) 0);
 		for (int i = 0; i < 8; ++i) {
 			CHECK(reader.read_bit());
 		}
@@ -95,8 +98,8 @@ TEST_CASE("encoder test") {
 
 	input_stream << "hello";
 	enc.encode(input_stream);
-	CHECK((unsigned char)output_stream.get() == 0b01100101);
-	CHECK((unsigned char)output_stream.get() == 0b11100110);
+	CHECK((unsigned char) output_stream.get() == 0b01100101);
+	CHECK((unsigned char) output_stream.get() == 0b11100110);
 }
 
 TEST_CASE("decoder and huffman tree test") {
@@ -140,8 +143,8 @@ TEST_CASE("decoder and huffman tree test") {
 TEST_CASE("huffman tree test") {
 
 	SUBCASE("test huffman tree node") {
-		auto* left_node = new huffman_tree::huffman_tree_node('a', 3);
-		auto* right_node = new huffman_tree::huffman_tree_node('b', 2);
+		auto *left_node = new huffman_tree::huffman_tree_node('a', 3);
+		auto *right_node = new huffman_tree::huffman_tree_node('b', 2);
 		huffman_tree::huffman_tree_node main_node(left_node, right_node);
 
 		CHECK(left_node->is_leaf());
@@ -273,30 +276,6 @@ TEST_CASE("range test") {
 	CHECK(r.get_new_byte() == 0b00000111);
 	r.pop_new_byte();
 	CHECK(!r.new_byte());
-
-//	bit_buffer::bit_buffer buf;
-//	range::range r2;
-//	r2.change_according_to_char(1, 3, 2); // 0.01 to 0.11
-//	CHECK(!r2.is_strictly_in(buf));
-//	buf.add(false);
-//	buf.add(true);
-//	CHECK(!r2.is_strictly_in(buf));
-//	buf.add(false);
-//	CHECK(r2.is_strictly_in(buf));
-//	buf.pop_front(); buf.pop_front(); buf.pop_front();
-//	buf.add(false);
-//	buf.add(false);
-//	buf.add(true);
-//	CHECK(!r2.is_strictly_in(buf));
-//	buf.add(true);
-//	CHECK(r2.is_strictly_in(buf));
-//	buf.pop_front(); buf.pop_front(); buf.pop_front(); buf.pop_front();
-//	buf.add(false);
-//	buf.add(true);
-//	buf.add(true);
-//	CHECK(!r2.is_strictly_in(buf));
-//	buf.add(false);
-//	CHECK(!r2.is_strictly_in(buf));
 
 	range::range r3;
 	r3.change_according_to_char(0, 2, 2); // [0 1] -> [0.0 0.1]
@@ -492,4 +471,168 @@ TEST_CASE("arithmetic encoder + decoder test") {
 	std::string res;
 	stream3 >> res;
 	CHECK(text == res);
+}
+
+TEST_CASE("suffix array test") {
+	CHECK(btw::suffix_array("abcd") == std::vector{0, 1, 2, 3});
+	CHECK(btw::suffix_array("aaba") == std::vector{3, 0, 1, 2});
+	CHECK(btw::suffix_array("abaabbaba") == std::vector{8, 2, 6, 0, 3, 7, 1, 5, 4});
+}
+
+TEST_CASE("btw transformation test") {
+	CHECK(btw::transform("abcd") == std::make_pair(std::string("dabc"), 0));
+	CHECK(btw::transform("aaba") == std::make_pair(std::string("baaa"), 1));
+	CHECK(btw::transform("^BANANA|") == std::make_pair(std::string("BNN^AA|A"), 6));
+}
+
+TEST_CASE("btw inverse transformation test") {
+	CHECK(btw::inverse_transformation("dabc", 0) == "abcd");
+	CHECK(btw::inverse_transformation("baaa", 1) == "aaba");
+	CHECK(btw::inverse_transformation("BNN^AA|A", 6) == "^BANANA|");
+}
+
+TEST_CASE("btw full test") {
+	SUBCASE("1") {
+		std::string text = "kadjflkdshkdjghdsfcvbdfbv bsfdg  r49i324 rq r";
+		auto tr = btw::transform(text);
+		CHECK(btw::inverse_transformation(tr.first, tr.second) == text);
+	}
+
+	SUBCASE("2") {
+		std::string text = "jdfhadsfbanmfbadsmfndasfdasfdasfdakjdsafhdasjkfhhhhhhfmnsdbsssss";
+		auto tr = btw::transform(text);
+		CHECK(btw::inverse_transformation(tr.first, tr.second) == text);
+	}
+
+	SUBCASE("3") {
+		std::string text = "1. The Raven \n"
+		                   "by Edgar Allen Poe\n"
+		                   "Deep into that darkness peering,\n"
+		                   "Long I stood there, wondering, fearing,\n"
+		                   "Doubting, dreaming dreams no mortals\n"
+		                   "Ever dared to dream before;\n"
+		                   "But the silence was unbroken,\n"
+		                   "And the stillness gave no token,\n"
+		                   "And the only word there spoken\n"
+		                   "Was the whispered word, \"Lenore!\"\n"
+		                   "This I whispered, and an echo\n"
+		                   "Murmured back the word, \"Lenore!\"\n"
+		                   "Merely this, and nothing more.\n"
+		                   "2. The New Colossus\n"
+		                   "by Emma Lazarus\n"
+		                   "Not like the brazen giant of Greek fame,\n"
+		                   "With conquering limbs astride from land to land;\n"
+		                   "Here at our sea-washed, sunset gates shall stand\n"
+		                   "A mighty woman with a torch, whose flame\n"
+		                   "Is the imprisoned lightning, and her name\n"
+		                   "Mother of Exiles. From her beacon-hand\n"
+		                   "Glows world-wide welcome; her mild eyes command\n"
+		                   "The air-bridged harbor that twin cities frame.\n"
+		                   "“Keep, ancient lands, your storied pomp!” cries she\n"
+		                   "  So long lives this, and this gives life to thee.";
+		auto tr = btw::transform(text);
+		CHECK(btw::inverse_transformation(tr.first, tr.second) == text);
+	}
+}
+
+TEST_CASE("rle transformation test") {
+	CHECK(rle::transform("aaaaaabcde") == std::string(1, 6) + "a" + std::string(1, -4) + "bcde");
+	CHECK(rle::transform("aaaaaaaaa") == std::string(1, 9) + "a");
+	CHECK(rle::transform("abcdeeeeee") == std::string(1, -4) + "abcd" + std::string(1, 6) + "e");
+	CHECK(rle::transform("abcddddcba") ==
+	      std::string(1, -3) + "abc" + std::string(1, 4) + "d" + std::string(1, -3) + "cba");
+}
+
+TEST_CASE("rle inverse transformation test") {
+	rle::inv_transformator tr(6);
+	tr.add_char(6);
+	CHECK(!tr.is_ready());
+	tr.add_char('a');
+	CHECK(tr.is_ready());
+	CHECK(tr.get_string() == "aaaaaa");
+	tr.add_char(-4);
+	tr.add_char('b');
+	tr.add_char('c');
+	tr.add_char('d');
+	tr.add_char('e');
+	CHECK(!tr.is_ready());
+	CHECK(tr.get_string() == "bcde");
+
+}
+
+TEST_CASE("btw+rle coding test") {
+	std::stringstream stream1;
+	std::stringstream stream2;
+
+	stream1 << "aaba";
+	btw_coding::encode(stream2, stream1); // aaba -> baaa -> -1 b 3 a
+	CHECK(statistic::read_int32_t(stream2) == 1);
+	CHECK(static_cast<char>(stream2.get()) == -1);
+	CHECK(static_cast<char>(stream2.get()) == 'b');
+	CHECK(static_cast<char>(stream2.get()) == 3);
+	CHECK(static_cast<char>(stream2.get()) == 'a');
+}
+
+TEST_CASE("btw+rle decoding test") {
+	std::stringstream stream1;
+	std::stringstream stream2;
+
+	statistic::write_int32_t(stream1, 1);
+	stream1.put(static_cast<char>(-2));
+	stream1.put(static_cast<char>('b'));
+	stream1.put(static_cast<char>('a'));
+	stream1.put(static_cast<char>(2));
+	stream1.put(static_cast<char>('a'));
+	btw_coding::decode(stream2, stream1);
+	std::string source;
+	stream2 >> source;
+	CHECK(source == "aaba");
+}
+
+TEST_CASE("bwt+rle encoding+decoding test") {
+	SUBCASE("small") {
+		std::string text("jdfhadsfbanmfbadsmfndasfdasfdasfdakjdsafhdasjkfhhhhhhfmnsdbsssss");
+		std::stringstream stream1;
+		std::stringstream stream2;
+		std::stringstream stream3;
+		stream1 << text;
+		btw_coding::encode(stream2, stream1);
+		btw_coding::decode(stream3, stream2);
+		std::string res;
+		stream3 >> res;
+		CHECK(text == res);
+	}
+
+	SUBCASE("big") {
+		std::string text; // a..ab..b
+		int len = 1000000;
+		for (int i = 0; i < len; ++i)
+			text.push_back(i < len / 2 ? 'a' : 'b');
+		std::stringstream stream1;
+		std::stringstream stream2;
+		std::stringstream stream3;
+		stream1 << text;
+		btw_coding::encode(stream2, stream1);
+		btw_coding::decode(stream3, stream2);
+		std::string res;
+		stream3 >> res;
+		CHECK(text == res);
+	}
+
+	SUBCASE("other big") {
+
+		std::string text;
+		int len = 1000000;
+		for (int i = 0; i < len; ++i)
+			text.push_back(static_cast<char>('a' + (i % 26)));
+		std::stringstream stream1;
+		std::stringstream stream2;
+		std::stringstream stream3;
+		stream1 << text;
+		btw_coding::encode(stream2, stream1);
+		btw_coding::decode(stream3, stream2);
+		std::string res;
+		stream3 >> res;
+		CHECK(text == res);
+	}
 }

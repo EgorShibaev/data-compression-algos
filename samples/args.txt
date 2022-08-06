@@ -7,6 +7,11 @@ encode arithmetic
 -c -f samples/sample1.txt -o OUTPUT_FILE -ar
 decode arithmetic
 -u -f OUTPUT_FILE -o samples/sample_1_cd.txt -ar
+encode btw
+-c -f samples/sample1.txt -o OUTPUT_FILE -btw
+decode btw
+-u -f OUTPUT_FILE -o samples/sample_1_cd.txt -btw
+
 
 SAMPLE 2
 encode huffman
@@ -17,6 +22,11 @@ encode arithmetic
 -c -f samples/sample2.bmp -o OUTPUT_FILE -ar
 decode arithmetic
 -u -f OUTPUT_FILE -o samples/sample2_cd.bmp -ar
+encode btw
+-c -f samples/sample2.bmp -o OUTPUT_FILE -btw
+decode btw
+-u -f OUTPUT_FILE -o samples/sample2_cd.bmp -btw
+
 
 SAMPLE 3
 encode huffman
@@ -27,4 +37,7 @@ encode arithmetic
 -c -f samples/sample3.txt -o OUTPUT_FILE -ar
 decode arithmetic
 -u -f OUTPUT_FILE -o samples/sample3_cd.txt -ar
-
+encode btw
+-c -f samples/sample3.txt -o OUTPUT_FILE -btw
+decode btw
+-u -f OUTPUT_FILE -o samples/sample3_cd.txt -btw
