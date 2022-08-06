@@ -2,7 +2,7 @@
 #include "huffman/huffman_coding.hpp"
 #include "constants.hpp"
 #include "arithmetic/arithmetic_coding.hpp"
-#include "BTW/btw_coding.hpp"
+#include "BWT/bwt_coding.hpp"
 #include <vector>
 #include <tuple>
 #include <fstream>
@@ -14,7 +14,7 @@
 using std::string;
 
 bool is_algo_name(const std::string& arg) {
-	return arg == huffman_mode_name || arg == arithmetic_mode_name || arg == BTW_mode_name;
+	return arg == huffman_mode_name || arg == arithmetic_mode_name || arg == BWT_mode_name;
 }
 
 using arguments_t = std::tuple<char, string, string, string>;
@@ -68,16 +68,16 @@ void huffman_algo(const std::string& file, const std::string& output, char mode)
 	}
 }
 
-void btw_algo(const std::string& file, const std::string& output, char mode) {
+void bwt_algo(const std::string& file, const std::string& output, char mode) {
 	if (mode == 'c') {
 		std::ofstream out(output);
 		std::ifstream in(file);
-		btw_coding::encode(out, in);
+		bwt_coding::encode(out, in);
 	}
 	else {
 		std::ofstream out(output);
 		std::ifstream in(file);
-		btw_coding::decode(out, in);
+		bwt_coding::decode(out, in);
 	}
 }
 
@@ -124,8 +124,8 @@ int main(int argc, char *argv[]) {
 			huffman_algo(file, output, mode);
 		else if (algo_name == arithmetic_mode_name)
 			arithmetic_algo(file, output, mode);
-		else if (algo_name == BTW_mode_name)
-			btw_algo(file, output, mode);
+		else if (algo_name == BWT_mode_name)
+			bwt_algo(file, output, mode);
 
 		if (mode == 'c') {
 			auto input_file_size = std::filesystem::file_size(file);

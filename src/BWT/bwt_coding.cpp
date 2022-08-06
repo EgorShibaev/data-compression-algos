@@ -1,20 +1,20 @@
-#include "BTW/btw_coding.hpp"
-#include "BTW/btw.hpp"
-#include "BTW/rle.hpp"
+#include "BWT/bwt_coding.hpp"
+#include "BWT/bwt.hpp"
+#include "BWT/rle.hpp"
 #include "statistic.hpp"
 #include <cassert>
 #include <algorithm>
 
-namespace btw_coding {
+namespace bwt_coding {
 
 	const size_t block_size = 100000;
 
 	void write_block(std::ostream& out, const std::string& cur) {
-		auto btw_tr = btw::transform(cur);
+		auto bwt_tr = bwt::transform(cur);
 
-		assert(btw::inverse_transformation(btw_tr.first, btw_tr.second) == cur);
-		int pos = btw_tr.second;
-		auto rle_tr = rle::transform(btw_tr.first);
+		assert(bwt::inverse_transformation(bwt_tr.first, bwt_tr.second) == cur);
+		int pos = bwt_tr.second;
+		auto rle_tr = rle::transform(bwt_tr.first);
 		statistic::write_int32_t(out, pos);
 		out << rle_tr;
 	}
@@ -55,8 +55,8 @@ namespace btw_coding {
 			inv_tr.add_char(ch);
 			if (inv_tr.is_ready()) {
 				cnt++;
-				auto btw_tr_str = inv_tr.get_string();
-				auto source = btw::inverse_transformation(btw_tr_str, pos);
+				auto bwt_tr_str = inv_tr.get_string();
+				auto source = bwt::inverse_transformation(bwt_tr_str, pos);
 				out << source;
 
 				pos = statistic::read_int32_t(in);
@@ -66,9 +66,9 @@ namespace btw_coding {
 
 		}
 
-		auto btw_tr_str = inv_tr.get_string();
-		if (!btw_tr_str.empty()) {
-			auto source = btw::inverse_transformation(btw_tr_str, pos);
+		auto bwt_tr_str = inv_tr.get_string();
+		if (!bwt_tr_str.empty()) {
+			auto source = bwt::inverse_transformation(bwt_tr_str, pos);
 			out << source;
 		}
 	}

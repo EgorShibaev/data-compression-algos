@@ -4,7 +4,7 @@
 #include <utility>
 #include <vector>
 
-namespace btw {
+namespace bwt {
 
 	std::vector<int> suffix_array(const std::string& str);
 

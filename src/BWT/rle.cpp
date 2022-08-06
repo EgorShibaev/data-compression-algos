@@ -1,4 +1,4 @@
-#include "BTW/rle.hpp"
+#include "BWT/rle.hpp"
 #include <vector>
 #include <iostream>
 

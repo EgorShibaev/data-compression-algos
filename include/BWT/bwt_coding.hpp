@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-namespace btw_coding { // btw + rle
+namespace bwt_coding { // BWT + rle
 
 	void encode(std::ostream&, std::istream&);
 

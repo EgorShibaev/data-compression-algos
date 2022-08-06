@@ -7,7 +7,7 @@ set(
         SRC_LIST
         src/bit_manipulating.cpp src/huffman/huffman_coding.cpp src/huffman/huffman_tree.cpp
         src/statistic.cpp src/arithmetic/range.cpp src/arithmetic/bit_buffer.cpp src/arithmetic/arithmetic_coding.cpp
-        src/BTW/btw.cpp src/BTW/rle.cpp src/BTW/btw_coding.cpp
+        src/BWT/bwt.cpp src/BWT/rle.cpp src/BWT/bwt_coding.cpp
 )
 
 add_executable(dca ${SRC_LIST} src/main.cpp)

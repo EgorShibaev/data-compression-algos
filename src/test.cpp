@@ -9,9 +9,9 @@
 #include "arithmetic/range.hpp"
 #include <sstream>
 #include "arithmetic/arithmetic_coding.hpp"
-#include "BTW/btw.hpp"
-#include "BTW/rle.hpp"
-#include "BTW/btw_coding.hpp"
+#include "BWT/bwt.hpp"
+#include "BWT/rle.hpp"
+#include "BWT/bwt_coding.hpp"
 
 TEST_CASE("bit_reader tests") {
 	std::stringstream stream;
@@ -474,34 +474,34 @@ TEST_CASE("arithmetic encoder + decoder test") {
 }
 
 TEST_CASE("suffix array test") {
-	CHECK(btw::suffix_array("abcd") == std::vector{0, 1, 2, 3});
-	CHECK(btw::suffix_array("aaba") == std::vector{3, 0, 1, 2});
-	CHECK(btw::suffix_array("abaabbaba") == std::vector{8, 2, 6, 0, 3, 7, 1, 5, 4});
+	CHECK(bwt::suffix_array("abcd") == std::vector{0, 1, 2, 3});
+	CHECK(bwt::suffix_array("aaba") == std::vector{3, 0, 1, 2});
+	CHECK(bwt::suffix_array("abaabbaba") == std::vector{8, 2, 6, 0, 3, 7, 1, 5, 4});
 }
 
-TEST_CASE("btw transformation test") {
-	CHECK(btw::transform("abcd") == std::make_pair(std::string("dabc"), 0));
-	CHECK(btw::transform("aaba") == std::make_pair(std::string("baaa"), 1));
-	CHECK(btw::transform("^BANANA|") == std::make_pair(std::string("BNN^AA|A"), 6));
+TEST_CASE("BWT transformation test") {
+	CHECK(bwt::transform("abcd") == std::make_pair(std::string("dabc"), 0));
+	CHECK(bwt::transform("aaba") == std::make_pair(std::string("baaa"), 1));
+	CHECK(bwt::transform("^BANANA|") == std::make_pair(std::string("BNN^AA|A"), 6));
 }
 
-TEST_CASE("btw inverse transformation test") {
-	CHECK(btw::inverse_transformation("dabc", 0) == "abcd");
-	CHECK(btw::inverse_transformation("baaa", 1) == "aaba");
-	CHECK(btw::inverse_transformation("BNN^AA|A", 6) == "^BANANA|");
+TEST_CASE("BWT inverse transformation test") {
+	CHECK(bwt::inverse_transformation("dabc", 0) == "abcd");
+	CHECK(bwt::inverse_transformation("baaa", 1) == "aaba");
+	CHECK(bwt::inverse_transformation("BNN^AA|A", 6) == "^BANANA|");
 }
 
-TEST_CASE("btw full test") {
+TEST_CASE("BWT full test") {
 	SUBCASE("1") {
 		std::string text = "kadjflkdshkdjghdsfcvbdfbv bsfdg  r49i324 rq r";
-		auto tr = btw::transform(text);
-		CHECK(btw::inverse_transformation(tr.first, tr.second) == text);
+		auto tr = bwt::transform(text);
+		CHECK(bwt::inverse_transformation(tr.first, tr.second) == text);
 	}
 
 	SUBCASE("2") {
 		std::string text = "jdfhadsfbanmfbadsmfndasfdasfdasfdakjdsafhdasjkfhhhhhhfmnsdbsssss";
-		auto tr = btw::transform(text);
-		CHECK(btw::inverse_transformation(tr.first, tr.second) == text);
+		auto tr = bwt::transform(text);
+		CHECK(bwt::inverse_transformation(tr.first, tr.second) == text);
 	}
 
 	SUBCASE("3") {
@@ -530,8 +530,8 @@ TEST_CASE("btw full test") {
 		                   "The air-bridged harbor that twin cities frame.\n"
 		                   "“Keep, ancient lands, your storied pomp!” cries she\n"
 		                   "  So long lives this, and this gives life to thee.";
-		auto tr = btw::transform(text);
-		CHECK(btw::inverse_transformation(tr.first, tr.second) == text);
+		auto tr = bwt::transform(text);
+		CHECK(bwt::inverse_transformation(tr.first, tr.second) == text);
 	}
 }
 
@@ -560,12 +560,12 @@ TEST_CASE("rle inverse transformation test") {
 
 }
 
-TEST_CASE("btw+rle coding test") {
+TEST_CASE("BWT+rle coding test") {
 	std::stringstream stream1;
 	std::stringstream stream2;
 
 	stream1 << "aaba";
-	btw_coding::encode(stream2, stream1); // aaba -> baaa -> -1 b 3 a
+	bwt_coding::encode(stream2, stream1); // aaba -> baaa -> -1 b 3 a
 	CHECK(statistic::read_int32_t(stream2) == 1);
 	CHECK(static_cast<char>(stream2.get()) == -1);
 	CHECK(static_cast<char>(stream2.get()) == 'b');
@@ -573,7 +573,7 @@ TEST_CASE("btw+rle coding test") {
 	CHECK(static_cast<char>(stream2.get()) == 'a');
 }
 
-TEST_CASE("btw+rle decoding test") {
+TEST_CASE("BWT+rle decoding test") {
 	std::stringstream stream1;
 	std::stringstream stream2;
 
@@ -583,21 +583,21 @@ TEST_CASE("btw+rle decoding test") {
 	stream1.put(static_cast<char>('a'));
 	stream1.put(static_cast<char>(2));
 	stream1.put(static_cast<char>('a'));
-	btw_coding::decode(stream2, stream1);
+	bwt_coding::decode(stream2, stream1);
 	std::string source;
 	stream2 >> source;
 	CHECK(source == "aaba");
 }
 
-TEST_CASE("bwt+rle encoding+decoding test") {
+TEST_CASE("BWT+rle encoding+decoding test") {
 	SUBCASE("small") {
 		std::string text("jdfhadsfbanmfbadsmfndasfdasfdasfdakjdsafhdasjkfhhhhhhfmnsdbsssss");
 		std::stringstream stream1;
 		std::stringstream stream2;
 		std::stringstream stream3;
 		stream1 << text;
-		btw_coding::encode(stream2, stream1);
-		btw_coding::decode(stream3, stream2);
+		bwt_coding::encode(stream2, stream1);
+		bwt_coding::decode(stream3, stream2);
 		std::string res;
 		stream3 >> res;
 		CHECK(text == res);
@@ -612,8 +612,8 @@ TEST_CASE("bwt+rle encoding+decoding test") {
 		std::stringstream stream2;
 		std::stringstream stream3;
 		stream1 << text;
-		btw_coding::encode(stream2, stream1);
-		btw_coding::decode(stream3, stream2);
+		bwt_coding::encode(stream2, stream1);
+		bwt_coding::decode(stream3, stream2);
 		std::string res;
 		stream3 >> res;
 		CHECK(text == res);
@@ -629,8 +629,8 @@ TEST_CASE("bwt+rle encoding+decoding test") {
 		std::stringstream stream2;
 		std::stringstream stream3;
 		stream1 << text;
-		btw_coding::encode(stream2, stream1);
-		btw_coding::decode(stream3, stream2);
+		bwt_coding::encode(stream2, stream1);
+		bwt_coding::decode(stream3, stream2);
 		std::string res;
 		stream3 >> res;
 		CHECK(text == res);

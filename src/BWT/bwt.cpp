@@ -1,4 +1,4 @@
-#include <BTW/btw.hpp>
+#include <BWT/bwt.hpp>
 
 #include <vector>
 #include <iostream>
@@ -6,7 +6,7 @@
 #include <cassert>
 #include "constants.hpp"
 
-namespace btw {
+namespace bwt {
 
 	std::vector<int> suffix_array(const std::string &str) {
 		int len = static_cast<int>(str.length());
